@@ -48,7 +48,7 @@ select -1 as EmployeeID, '--select--' as name union all select EmployeeID,CONCAT
 CREATE TABLE Salaries (
     SalaryID INT PRIMARY KEY IDENTITY(1,1),
     EmployeeID INT,
-    Amount DECIMAL(10, 2) NOT NULL,
+    Amount DECIMAL(10, 2),
     SalaryType VARCHAR(20),
 	Bonus DECIMAL(10, 2),
 	FinalSalary DECIMAL(10, 2),
@@ -58,13 +58,14 @@ drop table Salaries
 
 CREATE TABLE Projects (
     ProjectID INT PRIMARY KEY IDENTITY(1,1),
-    ProjectName NVARCHAR(50) NOT NULL,
+    ProjectName NVARCHAR(50) ,
     ProjectManager VARCHAR(50),
     StartDate DATE,
     EndDate DATE,
     Budget DECIMAL(15, 2),
     IsActive BIT
 );
+drop table Projects
 
 select * from Projects
 
