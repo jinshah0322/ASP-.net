@@ -160,7 +160,6 @@ namespace EmployeeManagement
                 if ((e.Row.RowState & DataControlRowState.Edit) == DataControlRowState.Edit)
                 {
                     DropDownList ddlEmployeeID = (DropDownList)e.Row.FindControl("ddlEmployeeIDEdit");
-                    DropDownList txtddlSalaryTypeEdit = (DropDownList)e.Row.FindControl("txtddlSalaryType");
 
 
                     ddlEmployeeID.DataSource = dtEmployeelist;
@@ -171,6 +170,7 @@ namespace EmployeeManagement
                     string currentEmployeeID = (e.Row.DataItem as DataRowView)["EmployeeID"].ToString();
                     ddlEmployeeID.SelectedValue = currentEmployeeID;
 
+                    DropDownList txtddlSalaryTypeEdit = (DropDownList)e.Row.FindControl("txtddlSalaryType");
                     string currentSalaryType = (e.Row.DataItem as DataRowView)["SalaryType"].ToString();
                     txtddlSalaryTypeEdit.SelectedValue = currentSalaryType;
                 }

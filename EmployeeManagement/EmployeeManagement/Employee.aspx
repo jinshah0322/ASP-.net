@@ -28,9 +28,22 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Email</td>
+                    <td>
+                        <asp:TextBox ID="Email" runat="server" Width="400"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="Email"
+                            ErrorMessage="Please Enter Email Address" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="Email"
+                            ErrorMessage="Please enter valid email" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">  
+                        </asp:RegularExpressionValidator>
+                    </td>
+                </tr>
+                <tr>
                     <td>Date Of Birth</td>
                     <td>
                         <asp:TextBox TextMode="Date" ID="DOB" runat="server"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="ValidateDOB" runat="server" ControlToValidate="DOB"
+                            ErrorMessage="Please Enter Date Of Birth" ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
@@ -40,25 +53,39 @@
                             <asp:ListItem Text="Male" Value="Male"></asp:ListItem>
                             <asp:ListItem Text="Female" Value="Female"></asp:ListItem>
                         </asp:RadioButtonList>
+                        <asp:RequiredFieldValidator ID="ValidateGender" runat="server" ControlToValidate="gender"
+                            ErrorMessage="Please Select Gender" ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
                     <td>Salary</td>
                     <td>
                         <asp:TextBox ID="salary" runat="server"></asp:TextBox>
-
+                        <asp:RequiredFieldValidator ID="Validatesalary" runat="server" ControlToValidate="salary"
+                            ErrorMessage="Please salary" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:RangeValidator ID="RangeValidatorsalary" runat="server" ControlToValidate="salary"
+                            ErrorMessage="Enter value between 100-100000000" ForeColor="Red" MaximumValue="100000000" MinimumValue="100"
+                            SetFocusOnError="True" Type="Double"></asp:RangeValidator>
                     </td>
                 </tr>
                 <tr>
                     <td>Joining Date</td>
                     <td>
                         <asp:TextBox TextMode="Date" ID="JoiningDate" runat="server"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorJD" runat="server" ControlToValidate="JoiningDate"
+                            ErrorMessage="Please Enter Joining Date" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:CompareValidator ID="CompareValidatorJD" runat="server" ControlToCompare="DOB"
+                            ControlToValidate="JoiningDate" Display="Dynamic" ErrorMessage="Joining Date must be greater than Birth Date" ForeColor="Red"
+                            Operator="GreaterThan" Type="Date"></asp:CompareValidator>
+
                     </td>
                 </tr>
                 <tr>
                     <td>Department ID</td>
                     <td>
                         <asp:DropDownList runat="server" ID="ddlDepartmentName" AutoPostBack="true" CausesValidation="true"></asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlDepartmentName"
+                            ErrorMessage="Please Select Department ID" ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
@@ -75,6 +102,8 @@
                     <td>
                         <asp:DropDownList runat="server" ID="ddlState" AutoPostBack="true" OnSelectedIndexChanged="ddlState_SelectedIndexChanged">
                         </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="ddlState"
+                            ErrorMessage="Please Select State" ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
@@ -87,7 +116,7 @@
                     <td></td>
                     <td>
                         <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="BtnAdd_Click" />
-                        <asp:Button ID="btnHome" runat="server" Text="Home" OnClick="BtnHome_Click" CausesValidation="false"/>
+                        <asp:Button ID="btnHome" runat="server" Text="Home" OnClick="BtnHome_Click" CausesValidation="false" />
                     </td>
                 </tr>
             </table>
@@ -111,6 +140,17 @@
                     </ItemTemplate>
                     <EditItemTemplate>
                         <asp:TextBox ID="txtLastName" runat="server" Text='<%# Eval("LastName") %>' Width="140"></asp:TextBox>
+                    </EditItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Email" ItemStyle-Width="150">
+                    <ItemTemplate>
+                        <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Email") %>'></asp:Label>
+                    </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEmail" runat="server" Text='<%# Eval("Email") %>' Width="140"></asp:TextBox>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtEmail"
+                            ErrorMessage="Please enter valid email" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">  
+                        </asp:RegularExpressionValidator>
                     </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="DateOfBirth" ItemStyle-Width="150">
@@ -161,16 +201,28 @@
                     <ItemTemplate>
                         <asp:Label ID="lblInterestedTechnologies" runat="server" Text='<%# Eval("InterestedTechnologies") %>'></asp:Label>
                     </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:CheckBox ID="Editasp" runat="server" Text="ASP" />
+                        <asp:CheckBox ID="EditPHP" runat="server" Text="PHP" />
+                        <asp:CheckBox ID="EditSpringBoot" runat="server" Text="SpringBoot" />
+                        <asp:CheckBox ID="EditNodejs" runat="server" Text="Nodejs" />
+                    </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="State" ItemStyle-Width="150">
                     <ItemTemplate>
                         <asp:Label ID="lblState" runat="server" Text='<%# Eval("State") %>'></asp:Label>
                     </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:DropDownList ID="ddlEditState" runat="server" OnSelectedIndexChanged="TextBoxState_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                    </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="City" ItemStyle-Width="150">
                     <ItemTemplate>
                         <asp:Label ID="lblCity" runat="server" Text='<%# Eval("City") %>'></asp:Label>
                     </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:DropDownList ID="ddlEditCity" runat="server"></asp:DropDownList>
+                    </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true"
                     ItemStyle-Width="150" CausesValidation="false" />

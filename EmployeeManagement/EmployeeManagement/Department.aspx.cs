@@ -18,7 +18,6 @@ namespace EmployeeManagement
             if (!IsPostBack)
             {
                 BindGrid();
-                BindDepartmentID();
             }
         }
 
@@ -40,24 +39,9 @@ namespace EmployeeManagement
             }
         }
 
-        protected void BindDepartmentID()
-        {
-            string constr = ConfigurationManager.ConnectionStrings["EmployeeDBConnectionString"].ConnectionString;
-            SqlConnection con = new SqlConnection(constr);
-            string com = "select -1 as DepartmentID, '--select--' as DepartmentName union all select DepartmentID,DepartmentName from Departments";
-            SqlDataAdapter adpt = new SqlDataAdapter(com, con);
-            DataTable dt = new DataTable();
-            adpt.Fill(dt);
-            DepartmentName.DataSource = dt;
-            DepartmentName.DataTextField = "DepartmentName";
-            DepartmentName.DataValueField = "DepartmentID";
-            DepartmentName.DataBind();
-            dtDepartmentlist = dt;
-        }
-
         protected void BtnAdd_Click(object sender, EventArgs e)
         {
-            string Department_Name = DepartmentName.SelectedValue;
+            string Department_Name = DepartmentName.Text;
             string Department_Head = DepartmentHead.Text;
             double budget = Convert.ToDouble(Budget.Text);
             string Creation_Date = CreationDate.SelectedDate.ToString("D");
@@ -99,12 +83,11 @@ namespace EmployeeManagement
         {
             GridViewRow row = GridView1.Rows[e.RowIndex];
             int Department_ID = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
-            string Department_Name = (row.FindControl("txtDepartmentName") as DropDownList).SelectedValue;
+            string Department_Name = (row.FindControl("txtDepartmentName") as TextBox).Text;
             string Department_Head = (row.FindControl("txtDepartmentHead") as TextBox).Text;
             string budget = (row.FindControl("txtBudget") as TextBox).Text;
             string Creation_Date = (row.FindControl("txtCreationDate") as TextBox).Text;
             bool isActive = (row.FindControl("txtDStatus") as CheckBox).Checked;
-
 
             string query = "UPDATE Departments SET DepartmentName=@Department_Name, DepartmentHead=@Department_Head, Budget=@budget, CreationDate=@Creation_Date, isActive=@isActive where DepartmentID=@DepartmentID";
             string constr = ConfigurationManager.ConnectionStrings["EmployeeDBConnectionString"].ConnectionString;
@@ -159,17 +142,6 @@ namespace EmployeeManagement
             {
                 if ((e.Row.RowState & DataControlRowState.Edit) == DataControlRowState.Edit)
                 {
-                    DropDownList ddlDepartmentID = (DropDownList)e.Row.FindControl("txtDepartmentName");
-
-                    ddlDepartmentID.DataSource = dtDepartmentlist;
-                    ddlDepartmentID.DataTextField = "DepartmentName";
-                    ddlDepartmentID.DataValueField = "DepartmentID";
-                    ddlDepartmentID.DataBind();
-
-                    string currentEmployeeID = (e.Row.DataItem as DataRowView)["DepartmentID"].ToString();
-                    ddlDepartmentID.SelectedValue = currentEmployeeID;
-
-
                     TextBox txtCreationDate = (TextBox)e.Row.FindControl("txtCreationDate");
                     string currentCreationDate= (e.Row.DataItem as DataRowView)["CreationDate"].ToString();
 

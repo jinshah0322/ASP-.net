@@ -30,7 +30,7 @@ namespace EmployeeManagement
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DepartmentName;
+        protected global::System.Web.UI.WebControls.TextBox DepartmentName;
 
         /// <summary>
         /// ValidateDName control.
@@ -67,6 +67,24 @@ namespace EmployeeManagement
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox Budget;
+
+        /// <summary>
+        /// validateBudget control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator validateBudget;
+
+        /// <summary>
+        /// ValidateBudgetselect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ValidateBudgetselect;
 
         /// <summary>
         /// CreationDate control.

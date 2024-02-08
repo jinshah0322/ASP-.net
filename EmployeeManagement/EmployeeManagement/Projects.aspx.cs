@@ -21,7 +21,6 @@ namespace EmployeeManagement
             if (!IsPostBack)
             {
                 BindGrid();
-                BindDDLProjectID();
             }
         }
 
@@ -43,31 +42,16 @@ namespace EmployeeManagement
             }
         }
 
-        protected void BindDDLProjectID()
-        {
-            string constr = ConfigurationManager.ConnectionStrings["EmployeeDBConnectionString"].ConnectionString;
-            SqlConnection con = new SqlConnection(constr);
-            string com = "select -1 as ProjectID, '--select--' as ProjectName union all select ProjectID,ProjectName from Projects";
-            SqlDataAdapter adpt = new SqlDataAdapter(com, con);
-            DataTable dt = new DataTable();
-            adpt.Fill(dt);
-            ProjectName.DataSource = dt;
-            ProjectName.DataTextField = "ProjectName";
-            ProjectName.DataValueField = "ProjectID";
-            ProjectName.DataBind();
-            ddlProjectID = dt;
-        }
-
         protected void BtnAdd_Click(object sender, EventArgs e)
         {
-            string Project_Name = ProjectName.SelectedValue;
+            string Project_Name = ProjectName.Text;
             string Project_Manager = ProjectManager.Text;
             double budget = Convert.ToDouble(Budget.Text);
             string Start_Date = StartDate.Text;
             string End_Date = EndDate.Text;
             bool is_Active = Convert.ToBoolean(isActive.SelectedValue)==true?true:false;
 
-            ProjectName.SelectedIndex = -1;
+            ProjectName.Text = "";
             ProjectManager.Text = "";
             Budget.Text = "";
             StartDate.Text = "";
@@ -106,7 +90,7 @@ namespace EmployeeManagement
         {
             GridViewRow row = GridView1.Rows[e.RowIndex];
             int ProjectID = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
-            string ProjectName = (row.FindControl("txtProjectName") as DropDownList).SelectedValue;
+            string ProjectName = (row.FindControl("txtProjectName") as TextBox).Text;
             string ProjectManager = (row.FindControl("txtProjectManager") as TextBox).Text;
             double budget = Convert.ToDouble((row.FindControl("txtBudget") as TextBox).Text);
             string StartDate = (row.FindControl("txtStartDate") as TextBox).Text;   
@@ -157,6 +141,21 @@ namespace EmployeeManagement
             this.BindGrid();
         }
 
+        protected void BindRadioBtnEdit(object sender, GridViewRowEventArgs e)
+        {
+            RadioButtonList txtIsActiveEdit = (RadioButtonList)e.Row.FindControl("txtIsActive");
+
+            string currentIsActive = (e.Row.DataItem as DataRowView)["isActive"].ToString();
+            foreach (ListItem item in txtIsActiveEdit.Items)
+            {
+                if (item.Value == currentIsActive)
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }
+        }
+
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow && e.Row.RowIndex != GridView1.EditIndex)
@@ -167,17 +166,8 @@ namespace EmployeeManagement
             {
                 if ((e.Row.RowState & DataControlRowState.Edit) == DataControlRowState.Edit)
                 {
-                    RadioButtonList txtIsActiveEdit = (RadioButtonList)e.Row.FindControl("txtIsActive");
+                    BindRadioBtnEdit(sender, e);
 
-                    string currentIsActive = (e.Row.DataItem as DataRowView)["isActive"].ToString();
-                    foreach (ListItem item in txtIsActiveEdit.Items)
-                    {
-                        if (item.Value == currentIsActive)
-                        {
-                            item.Selected = true;
-                            break;
-                        }
-                    }
 
                     TextBox StartDate = (TextBox)e.Row.FindControl("txtStartDate");
                     string currentStartDate = (e.Row.DataItem as DataRowView)["StartDate"].ToString();
@@ -196,17 +186,6 @@ namespace EmployeeManagement
                     {
                         EndDate.Text = ed.ToString("yyyy-MM-dd");
                     }
-
-
-                    DropDownList ddlProjectIDEdit = (DropDownList)e.Row.FindControl("txtProjectName");
-
-                    ddlProjectIDEdit.DataSource = ddlProjectID;
-                    ddlProjectIDEdit.DataTextField = "ProjectName";
-                    ddlProjectIDEdit.DataValueField = "ProjectID";
-                    ddlProjectIDEdit.DataBind();
-
-                    string currentProjectID = (e.Row.DataItem as DataRowView)["ProjectID"].ToString();
-                    ddlProjectIDEdit.SelectedValue = currentProjectID;
                 }
             }
 

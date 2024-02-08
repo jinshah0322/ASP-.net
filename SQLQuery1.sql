@@ -22,8 +22,9 @@ select * from Departments
 delete from Departments 
 CREATE TABLE Employees (
     EmployeeID INT PRIMARY KEY IDENTITY(1,1),
-    FirstName NVARCHAR(50) NOT NULL,
-    LastName NVARCHAR(50) NOT NULL,
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50) ,
+	Email Nvarchar(50),
     DateOfBirth DATE,
     Gender NVARCHAR(10) CHECK (Gender IN ('Male', 'Female')), 
     Salary DECIMAL(10, 2),
@@ -34,6 +35,12 @@ CREATE TABLE Employees (
 	City NVARCHAR(10),
     CONSTRAINT FK_Department_Employee FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
 );
+
+drop table Employees
+
+ALTER TABLE Employees
+ADD Email NVARCHAR(100) NOT NULL Unique;
+
 
 select * from Employees
 select -1 as EmployeeID, '--select--' as name union all select EmployeeID,CONCAT(FirstName,' ',LastName) as name from Employees
@@ -47,6 +54,7 @@ CREATE TABLE Salaries (
 	FinalSalary DECIMAL(10, 2),
     CONSTRAINT FK_Employee_Salaries FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
 );
+drop table Salaries
 
 CREATE TABLE Projects (
     ProjectID INT PRIMARY KEY IDENTITY(1,1),

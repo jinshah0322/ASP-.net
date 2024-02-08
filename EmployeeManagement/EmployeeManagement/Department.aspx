@@ -12,9 +12,9 @@
         <div>
             <table>
                 <tr>
-                    <td>Department ID</td>
+                    <td>Department Name</td>
                     <td>
-                        <asp:DropDownList ID="DepartmentName" runat="server" Width="400"></asp:DropDownList>
+                        <asp:TextBox ID="DepartmentName" runat="server" Width="400"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="ValidateDName" runat="server" ControlToValidate="DepartmentName"
                             ErrorMessage="Please Enter Department Name" ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
@@ -31,6 +31,11 @@
                     <td>Budget</td>
                     <td>
                         <asp:TextBox ID="Budget" runat="server" Width="400"></asp:TextBox>
+                        <asp:RangeValidator ID="validateBudget" runat="server" ControlToValidate="Budget"
+                            ErrorMessage="Enter Budget between 100-100000000" ForeColor="Red" MaximumValue="100000000" MinimumValue="100"
+                            SetFocusOnError="True" Type="Double"></asp:RangeValidator>
+                        <asp:RequiredFieldValidator ID="ValidateBudgetselect" runat="server" ControlToValidate="Budget"
+                            ErrorMessage="Please Enter Budget" ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
@@ -50,7 +55,7 @@
                     <td></td>
                     <td>
                         <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="BtnAdd_Click" />
-                        <asp:Button ID="btnHome" runat="server" Text="Home" OnClick="BtnHome_Click" CausesValidation="false"/>
+                        <asp:Button ID="btnHome" runat="server" Text="Home" OnClick="BtnHome_Click" CausesValidation="false" />
                     </td>
                 </tr>
             </table>
@@ -65,7 +70,7 @@
                         <asp:Label ID="lblDepartmentName" runat="server" Text='<%# Eval("DepartmentName") %>'></asp:Label>
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:DropDownList ID="txtDepartmentName" runat="server" Width="140"></asp:DropDownList>
+                        <asp:TextBox ID="txtDepartmentName" runat="server" Width="140" Text='<%# Eval("DepartmentName") %>'></asp:TextBox>
                     </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Department Head" ItemStyle-Width="150">
@@ -101,7 +106,7 @@
                     </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true"
-                    ItemStyle-Width="150" CausesValidation="false"/>
+                    ItemStyle-Width="150" CausesValidation="false" />
             </Columns>
         </asp:GridView>
     </form>

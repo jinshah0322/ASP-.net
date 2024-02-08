@@ -36,32 +36,44 @@
                             <asp:ListItem>Cash</asp:ListItem>
                             <asp:ListItem>UPI</asp:ListItem>
                         </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlSalaryType"
+                            ErrorMessage="Please Select salary type" ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
                     <td>Bonus</td>
                     <td>
                         <asp:TextBox ID="Bonus" runat="server" Width="400"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="Bonus"
+                            ErrorMessage="Please Enter Bonus" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="Bonus"
+                            ErrorMessage="Enter value between 0-500000" ForeColor="Red" MaximumValue="500000" MinimumValue="0"
+                            SetFocusOnError="True" Type="Double"></asp:RangeValidator>
                     </td>
                 </tr>
                 <tr>
                     <td>FinalSalary</td>
                     <td>
                         <asp:TextBox ID="FinalSalary" runat="server" Width="400"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="FinalSalary"
+                            ErrorMessage="Please Enter Bonus" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="FinalSalary"
+                            ControlToValidate="Amount" Display="Dynamic" ErrorMessage="Final salary cant be less than amount" ForeColor="Red"
+                            Operator="LessThanEqual" Type="Integer"></asp:CompareValidator>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
                         <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="BtnAdd_Click" />
-                        <asp:Button ID="btnHome" runat="server" Text="Home" OnClick="BtnHome_Click" CausesValidation="false"/>
+                        <asp:Button ID="btnHome" runat="server" Text="Home" OnClick="BtnHome_Click" CausesValidation="false" />
                     </td>
                 </tr>
             </table>
         </div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EmptyDataText="No records has been added."
             OnRowDataBound="OnRowDataBound" DataKeyNames="SalaryID" OnRowEditing="OnRowEditing"
-            OnRowCancelingEdit="OnRowCancelingEdit" PageSize="10" AllowPaging="true" OnPageIndexChanging="OnPaging" 
+            OnRowCancelingEdit="OnRowCancelingEdit" PageSize="10" AllowPaging="true" OnPageIndexChanging="OnPaging"
             OnRowUpdating="OnRowUpdating" OnRowDeleting="OnRowDeleting">
             <Columns>
                 <asp:TemplateField HeaderText="EmployeeID" ItemStyle-Width="150">

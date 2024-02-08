@@ -69,6 +69,15 @@ namespace EmployeeManagement
         protected global::System.Web.UI.WebControls.TextBox AssignmentDate;
 
         /// <summary>
+        /// RequiredFieldValidatorAssignmentDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorAssignmentDate;
+
+        /// <summary>
         /// HoursWorked control.
         /// </summary>
         /// <remarks>
@@ -78,6 +87,24 @@ namespace EmployeeManagement
         protected global::System.Web.UI.WebControls.TextBox HoursWorked;
 
         /// <summary>
+        /// RequiredFieldValidatorNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorNumber;
+
+        /// <summary>
+        /// RangeValidatorHoursWorked control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RangeValidatorHoursWorked;
+
+        /// <summary>
         /// Status control.
         /// </summary>
         /// <remarks>
@@ -85,6 +112,15 @@ namespace EmployeeManagement
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList Status;
+
+        /// <summary>
+        /// RequiredFieldValidatorStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorStatus;
 
         /// <summary>
         /// btnAdd control.

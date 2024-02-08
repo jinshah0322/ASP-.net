@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <h1>Projects Form</h1>
+            <h1>Employee Project Form</h1>
             <div>
                 <table>
                     <tr>
@@ -32,12 +32,19 @@
                         <td>AssignmentDate</td>
                         <td>
                             <asp:TextBox TextMode="Date" ID="AssignmentDate" runat="server"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidatorAssignmentDate" runat="server" ControlToValidate="AssignmentDate"
+                                ErrorMessage="Please Enter Assignment Date" ForeColor="Red"></asp:RequiredFieldValidator>
                         </td>
                     </tr>
                     <tr>
                         <td>HoursWorked</td>
                         <td>
                             <asp:TextBox TextMode="Number" ID="HoursWorked" runat="server"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidatorNumber" runat="server" ControlToValidate="HoursWorked"
+                                ErrorMessage="Please Enter Hours Worked" ForeColor="Red"></asp:RequiredFieldValidator>
+                            <asp:RangeValidator ID="RangeValidatorHoursWorked" runat="server" ControlToValidate="HoursWorked"
+                                ErrorMessage="Enter value Between 0 to 500" ForeColor="Red" MaximumValue="500" MinimumValue="0"
+                                SetFocusOnError="True" Type=" Integer"></asp:RangeValidator>
                         </td>
                     </tr>
                     <tr>
@@ -48,13 +55,15 @@
                                 <asp:ListItem Text="Working" Value="Working"></asp:ListItem>
                                 <asp:ListItem Text="Completed" Value="Completed"></asp:ListItem>
                             </asp:RadioButtonList>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidatorStatus" runat="server" ControlToValidate="Status"
+                                ErrorMessage="Please Enter Assignment Date" ForeColor="Red"></asp:RequiredFieldValidator>
                         </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>
                             <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="BtnAdd_Click" />
-                            <asp:Button ID="btnHome" runat="server" Text="Home" OnClick="BtnHome_Click" CausesValidation="false"/>
+                            <asp:Button ID="btnHome" runat="server" Text="Home" OnClick="BtnHome_Click" CausesValidation="false" />
                         </td>
                     </tr>
                 </table>

@@ -30,7 +30,7 @@ namespace EmployeeManagement
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ProjectName;
+        protected global::System.Web.UI.WebControls.TextBox ProjectName;
 
         /// <summary>
         /// ValidateProjectName control.
@@ -69,6 +69,15 @@ namespace EmployeeManagement
         protected global::System.Web.UI.WebControls.TextBox StartDate;
 
         /// <summary>
+        /// ValidateStartDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ValidateStartDate;
+
+        /// <summary>
         /// EndDate control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,24 @@ namespace EmployeeManagement
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox EndDate;
+
+        /// <summary>
+        /// ValidateEndDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ValidateEndDate;
+
+        /// <summary>
+        /// CompareValidatorDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator CompareValidatorDate;
 
         /// <summary>
         /// Budget control.
@@ -87,6 +114,24 @@ namespace EmployeeManagement
         protected global::System.Web.UI.WebControls.TextBox Budget;
 
         /// <summary>
+        /// validateBudget control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator validateBudget;
+
+        /// <summary>
+        /// ValidateBudgetselect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ValidateBudgetselect;
+
+        /// <summary>
         /// isActive control.
         /// </summary>
         /// <remarks>
@@ -94,6 +139,15 @@ namespace EmployeeManagement
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList isActive;
+
+        /// <summary>
+        /// ValidateIsActive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ValidateIsActive;
 
         /// <summary>
         /// btnAdd control.

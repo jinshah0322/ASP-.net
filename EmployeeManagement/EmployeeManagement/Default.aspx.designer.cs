@@ -15,31 +15,13 @@ namespace EmployeeManagement
     {
 
         /// <summary>
-        /// EmployeeProject control.
+        /// Departments control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button EmployeeProject;
-
-        /// <summary>
-        /// Projects control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Projects;
-
-        /// <summary>
-        /// Salaries control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Salaries;
+        protected global::System.Web.UI.WebControls.Button Departments;
 
         /// <summary>
         /// Employees control.
@@ -51,12 +33,30 @@ namespace EmployeeManagement
         protected global::System.Web.UI.WebControls.Button Employees;
 
         /// <summary>
-        /// Departments control.
+        /// Salaries control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Departments;
+        protected global::System.Web.UI.WebControls.Button Salaries;
+
+        /// <summary>
+        /// Projects control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Projects;
+
+        /// <summary>
+        /// EmployeeProject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button EmployeeProject;
     }
 }
