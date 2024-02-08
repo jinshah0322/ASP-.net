@@ -68,10 +68,11 @@
                     </tr>
                 </table>
             </div>
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EmptyDataText="No records has been added."
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" EmptyDataText="No records has been added."
                 OnRowDataBound="OnRowDataBound" DataKeyNames="EPID" OnRowEditing="OnRowEditing"
-                OnRowCancelingEdit="OnRowCancelingEdit" PageSize="10" AllowPaging="true" OnPageIndexChanging="OnPaging"
-                OnRowDeleting="OnRowDeleting">
+                OnRowCancelingEdit="OnRowCancelingEdit" AllowPaging="True" OnPageIndexChanging="OnPaging"
+                OnRowDeleting="OnRowDeleting" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical">
+                <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:TemplateField HeaderText="EmployeeID" ItemStyle-Width="150">
                         <ItemTemplate>
@@ -80,6 +81,8 @@
                         <EditItemTemplate>
                             <asp:DropDownList ID="txtEmployeeID" runat="server" Width="140"></asp:DropDownList>
                         </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="ProjectID" ItemStyle-Width="150">
                         <ItemTemplate>
@@ -88,6 +91,8 @@
                         <EditItemTemplate>
                             <asp:DropDownList ID="txtProjectID" runat="server" Width="140"></asp:DropDownList>
                         </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="AssignmentDate" ItemStyle-Width="150">
                         <ItemTemplate>
@@ -96,6 +101,8 @@
                         <EditItemTemplate>
                             <asp:TextBox TextMode="Date" ID="txtAssignmentDate" runat="server" Text='<%# Eval("AssignmentDate") %>' Width="140"></asp:TextBox>
                         </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="HoursWorked" ItemStyle-Width="150">
                         <ItemTemplate>
@@ -104,6 +111,8 @@
                         <EditItemTemplate>
                             <asp:TextBox TextMode="Number" ID="txtHoursWorked" runat="server" Text='<%# Eval("HoursWorked") %>' Width="140"></asp:TextBox>
                         </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Status" ItemStyle-Width="150">
                         <ItemTemplate>
@@ -116,10 +125,23 @@
                                 <asp:ListItem Text="Completed" Value="Completed"></asp:ListItem>
                             </asp:RadioButtonList>
                         </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                     </asp:TemplateField>
                     <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true"
-                        ItemStyle-Width="150" CausesValidation="false" />
+                        ItemStyle-Width="150" CausesValidation="false" >
+<ItemStyle Width="150px"></ItemStyle>
+                    </asp:CommandField>
                 </Columns>
+                <FooterStyle BackColor="#CCCC99" />
+                <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
+                <RowStyle BackColor="#F7F7DE" />
+                <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
+                <SortedAscendingCellStyle BackColor="#FBFBF2" />
+                <SortedAscendingHeaderStyle BackColor="#848384" />
+                <SortedDescendingCellStyle BackColor="#EAEAD3" />
+                <SortedDescendingHeaderStyle BackColor="#575357" />
             </asp:GridView>
         </div>
     </form>

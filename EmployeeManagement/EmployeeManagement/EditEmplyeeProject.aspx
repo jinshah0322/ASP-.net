@@ -54,6 +54,7 @@
                     <td>
                         <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="BtnUpdate_Click" />
                         <asp:Button ID="btnBack" runat="server" Text="Back" OnClick="BtnBack_Click" />
+                        <asp:Button ID="btnHome" runat="server" Text="Home" OnClick="BtnHome_Click" CausesValidation="false" />
                     </td>
                 </tr>
             </table>

@@ -121,10 +121,11 @@
                 </tr>
             </table>
         </div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EmptyDataText="No records has been added."
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" EmptyDataText="No records has been added."
             OnRowDataBound="OnRowDataBound" DataKeyNames="EmployeeID" OnRowEditing="OnRowEditing"
-            OnRowCancelingEdit="OnRowCancelingEdit" PageSize="10" AllowPaging="true" OnPageIndexChanging="OnPaging" OnRowUpdating="OnRowUpdating"
-            OnRowDeleting="OnRowDeleting">
+            OnRowCancelingEdit="OnRowCancelingEdit" AllowPaging="True" OnPageIndexChanging="OnPaging" OnRowUpdating="OnRowUpdating"
+            OnRowDeleting="OnRowDeleting" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical">
+            <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:TemplateField HeaderText="FirstName" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -133,6 +134,8 @@
                     <EditItemTemplate>
                         <asp:TextBox ID="txtFirstName" runat="server" Text='<%# Eval("FirstName") %>' Width="140"></asp:TextBox>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="LastName" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -141,6 +144,8 @@
                     <EditItemTemplate>
                         <asp:TextBox ID="txtLastName" runat="server" Text='<%# Eval("LastName") %>' Width="140"></asp:TextBox>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Email" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -152,6 +157,8 @@
                             ErrorMessage="Please enter valid email" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">  
                         </asp:RegularExpressionValidator>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="DateOfBirth" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -160,6 +167,8 @@
                     <EditItemTemplate>
                         <asp:TextBox TextMode="Date" ID="txtDateOfBirth" runat="server" Text='<%# Eval("DateOfBirth") %>' Width="140"></asp:TextBox>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Gender" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -171,6 +180,8 @@
                             <asp:ListItem Text="Female" Value="Female"></asp:ListItem>
                         </asp:RadioButtonList>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Salary" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -179,6 +190,8 @@
                     <EditItemTemplate>
                         <asp:TextBox ID="txtSalary" runat="server" Text='<%# Eval("Salary") %>' Width="140"></asp:TextBox>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="JoiningDate" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -187,6 +200,8 @@
                     <EditItemTemplate>
                         <asp:TextBox TextMode="Date" ID="txtJoiningDate" runat="server" Text='<%# Eval("JoiningDate") %>' Width="140"></asp:TextBox>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="DepartmentID" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -196,6 +211,8 @@
                         <asp:DropDownList ID="txtDdlDepartmentEdit" runat="server" Width="140">
                         </asp:DropDownList>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="InterestedTechnologies" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -207,6 +224,8 @@
                         <asp:CheckBox ID="EditSpringBoot" runat="server" Text="SpringBoot" />
                         <asp:CheckBox ID="EditNodejs" runat="server" Text="Nodejs" />
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="State" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -215,6 +234,8 @@
                     <EditItemTemplate>
                         <asp:DropDownList ID="ddlEditState" runat="server" OnSelectedIndexChanged="TextBoxState_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="City" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -223,10 +244,23 @@
                     <EditItemTemplate>
                         <asp:DropDownList ID="ddlEditCity" runat="server"></asp:DropDownList>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true"
-                    ItemStyle-Width="150" CausesValidation="false" />
+                    ItemStyle-Width="150" CausesValidation="false" >
+<ItemStyle Width="150px"></ItemStyle>
+                </asp:CommandField>
             </Columns>
+            <FooterStyle BackColor="#CCCC99" />
+            <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
+            <RowStyle BackColor="#F7F7DE" />
+            <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
+            <SortedAscendingCellStyle BackColor="#FBFBF2" />
+            <SortedAscendingHeaderStyle BackColor="#848384" />
+            <SortedDescendingCellStyle BackColor="#EAEAD3" />
+            <SortedDescendingHeaderStyle BackColor="#575357" />
         </asp:GridView>
     </form>
 </body>

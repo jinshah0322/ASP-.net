@@ -60,10 +60,11 @@
                 </tr>
             </table>
         </div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EmptyDataText="No records has been added."
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" EmptyDataText="No records has been added."
             OnRowDataBound="OnRowDataBound" DataKeyNames="DepartmentID" OnRowEditing="OnRowEditing"
-            OnRowCancelingEdit="OnRowCancelingEdit" PageSize="10" AllowPaging="true" OnPageIndexChanging="OnPaging" OnRowUpdating="OnRowUpdating"
-            OnRowDeleting="OnRowDeleting">
+            OnRowCancelingEdit="OnRowCancelingEdit" AllowPaging="True" OnPageIndexChanging="OnPaging" OnRowUpdating="OnRowUpdating"
+            OnRowDeleting="OnRowDeleting" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical">
+            <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:TemplateField HeaderText="Department Name" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -72,6 +73,8 @@
                     <EditItemTemplate>
                         <asp:TextBox ID="txtDepartmentName" runat="server" Width="140" Text='<%# Eval("DepartmentName") %>'></asp:TextBox>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Department Head" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -80,6 +83,8 @@
                     <EditItemTemplate>
                         <asp:TextBox ID="txtDepartmentHead" runat="server" Text='<%# Eval("DepartmentHead") %>' Width="140"></asp:TextBox>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Budget" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -88,6 +93,8 @@
                     <EditItemTemplate>
                         <asp:TextBox ID="txtBudget" runat="server" Text='<%# Eval("Budget") %>' Width="140"></asp:TextBox>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Creation Date" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -96,6 +103,8 @@
                     <EditItemTemplate>
                         <asp:TextBox TextMode="Date" ID="txtCreationDate" runat="server" Width="140"></asp:TextBox>
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Department Status" ItemStyle-Width="150">
                     <ItemTemplate>
@@ -104,10 +113,23 @@
                     <EditItemTemplate>
                         <asp:CheckBox ID="txtDStatus" runat="server" Checked='<%# Convert.ToBoolean(Eval("IsActive")) %>' />
                     </EditItemTemplate>
+
+<ItemStyle Width="150px"></ItemStyle>
                 </asp:TemplateField>
                 <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true"
-                    ItemStyle-Width="150" CausesValidation="false" />
+                    ItemStyle-Width="150" CausesValidation="false" >
+<ItemStyle Width="150px"></ItemStyle>
+                </asp:CommandField>
             </Columns>
+            <FooterStyle BackColor="#CCCC99" />
+            <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
+            <RowStyle BackColor="#F7F7DE" />
+            <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
+            <SortedAscendingCellStyle BackColor="#FBFBF2" />
+            <SortedAscendingHeaderStyle BackColor="#848384" />
+            <SortedDescendingCellStyle BackColor="#EAEAD3" />
+            <SortedDescendingHeaderStyle BackColor="#575357" />
         </asp:GridView>
     </form>
 </body>

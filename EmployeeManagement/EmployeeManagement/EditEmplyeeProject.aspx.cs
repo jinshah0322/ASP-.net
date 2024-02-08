@@ -113,5 +113,10 @@ namespace EmployeeManagement
         {
             Response.Redirect("EmployeeProject.aspx");
         }
+
+        protected void BtnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Default.aspx");
+        }
     }
 }
