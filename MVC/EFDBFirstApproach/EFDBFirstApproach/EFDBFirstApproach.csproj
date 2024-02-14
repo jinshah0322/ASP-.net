@@ -130,8 +130,27 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SalaryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>Employees.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employees.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Employees.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employees.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Employees.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employees.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Employees.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Project.cs">
       <DependentUpon>Projects.tt</DependentUpon>
@@ -150,6 +169,24 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Projects.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Salaries.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Salaries.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Salaries.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Salaries.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Salaries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Salaries.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Salary.cs">
+      <DependentUpon>Salaries.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -173,6 +210,16 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Employees.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Employees.edmx</DependentUpon>
+      <LastGenOutput>Employees.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Employees.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Employees.edmx</DependentUpon>
+      <LastGenOutput>Employees.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\Projects.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Projects.edmx</DependentUpon>
@@ -182,6 +229,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Projects.edmx</DependentUpon>
       <LastGenOutput>Projects.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Salaries.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Salaries.edmx</DependentUpon>
+      <LastGenOutput>Salaries.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Salaries.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Salaries.edmx</DependentUpon>
+      <LastGenOutput>Salaries.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -195,6 +252,20 @@
     </EntityDeploy>
     <Content Include="Models\Projects.edmx.diagram">
       <DependentUpon>Projects.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Employees.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Employees.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Employees.edmx.diagram">
+      <DependentUpon>Employees.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Salaries.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Salaries.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Salaries.edmx.diagram">
+      <DependentUpon>Salaries.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -219,6 +290,13 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Salary\Index.cshtml" />
+    <Content Include="Views\Salary\Create.cshtml" />
+    <Content Include="Views\Salary\Edit.cshtml" />
+    <Content Include="Views\Salary\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

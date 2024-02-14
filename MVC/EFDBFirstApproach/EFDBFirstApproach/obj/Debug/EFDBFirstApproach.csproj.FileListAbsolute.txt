@@ -77,3 +77,7 @@ C:\Users\BAPS\Desktop\ASP .net\MVC\EFDBFirstApproach\EFDBFirstApproach\obj\Debug
 C:\Users\BAPS\Desktop\ASP .net\MVC\EFDBFirstApproach\EFDBFirstApproach\obj\Debug\EFDBFirstApproach.csproj.CopyComplete
 C:\Users\BAPS\Desktop\ASP .net\MVC\EFDBFirstApproach\EFDBFirstApproach\obj\Debug\EFDBFirstApproach.dll
 C:\Users\BAPS\Desktop\ASP .net\MVC\EFDBFirstApproach\EFDBFirstApproach\obj\Debug\EFDBFirstApproach.pdb
+C:\Users\BAPS\Desktop\ASP .net\MVC\EFDBFirstApproach\EFDBFirstApproach\bin\EntityFramework.dll
+C:\Users\BAPS\Desktop\ASP .net\MVC\EFDBFirstApproach\EFDBFirstApproach\bin\EntityFramework.SqlServer.dll
+C:\Users\BAPS\Desktop\ASP .net\MVC\EFDBFirstApproach\EFDBFirstApproach\bin\EntityFramework.xml
+C:\Users\BAPS\Desktop\ASP .net\MVC\EFDBFirstApproach\EFDBFirstApproach\bin\EntityFramework.SqlServer.xml

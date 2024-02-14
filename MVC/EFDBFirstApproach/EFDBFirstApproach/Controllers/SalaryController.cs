@@ -8,26 +8,29 @@ using System.Web.Mvc;
 
 namespace EFDBFirstApproach.Controllers
 {
-    public class HomeController : Controller
+    public class SalaryController : Controller
     {
-        EFCodeFirstEmployeeDBEntities2 db = new EFCodeFirstEmployeeDBEntities2 ();
+        EFCodeFirstEmployeeDBEntities1 db = new EFCodeFirstEmployeeDBEntities1();
+        EFCodeFirstEmployeeDBEntities db1 = new EFCodeFirstEmployeeDBEntities();
+        // GET: Salary
         public ActionResult Index()
         {
-            var data = db.Projects.ToList();
+            var data = db.Salaries.ToList();
             return View(data);
         }
 
         public ActionResult Create()
         {
+            ViewBag.Employees = db1.Employees.Select(e => e.EmployeeId).ToList();
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Project e)
+        public ActionResult Create(Salary e)
         {
             if (ModelState.IsValid == true)
             {
-                db.Projects.Add(e);
+                db.Salaries.Add(e);
                 int success = db.SaveChanges();
                 if (success > 0)
                 {
@@ -48,12 +51,13 @@ namespace EFDBFirstApproach.Controllers
 
         public ActionResult Edit(int id)
         {
-            var row = db.Projects.Where(model => model.ProjectID == id).FirstOrDefault();
+            var row = db.Salaries.Where(model => model.SalaryId == id).FirstOrDefault();
+            ViewBag.Employees = db1.Employees.Select(e => e.EmployeeId).ToList();
             return View(row);
         }
 
         [HttpPost]
-        public ActionResult Edit(Project e)
+        public ActionResult Edit(Salary e)
         {
             if (ModelState.IsValid == true)
             {
@@ -76,7 +80,7 @@ namespace EFDBFirstApproach.Controllers
         {
             if (id > 0)
             {
-                var row = db.Projects.Where(model => model.ProjectID == id).FirstOrDefault();
+                var row = db.Salaries.Where(model => model.SalaryId == id).FirstOrDefault();
                 if (row != null)
                 {
                     db.Entry(row).State = EntityState.Deleted;
@@ -96,7 +100,7 @@ namespace EFDBFirstApproach.Controllers
 
         public ActionResult Details(int id)
         {
-            var row = db.Projects.Where(model => model.ProjectID == id).FirstOrDefault();
+            var row = db.Salaries.Where(model => model.SalaryId == id).FirstOrDefault();
             return View(row);
         }
     }

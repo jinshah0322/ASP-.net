@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EFCodeFirstEmployeeDBModel1StoreContainer" CdmEntityContainer="EFCodeFirstEmployeeDBEntities1">
+    <EntitySetMapping Name="Salaries">
+      <EntityTypeMapping TypeName="EFCodeFirstEmployeeDBModel1.Salary">
+        <MappingFragment StoreEntitySet="Salaries">
+          <ScalarProperty Name="SalaryId" ColumnName="SalaryId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="SalaryType" ColumnName="SalaryType" />
+          <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+          <ScalarProperty Name="FinalSalary" ColumnName="FinalSalary" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
