@@ -1,0 +1,65 @@
+﻿@model EFCodeFirstApproachMVC.Models.Department
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Department</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartmentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartmentHead)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartmentHead)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Budget)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Budget)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @if (Model.IsActive)
+            {
+                <text>Active</text>
+            }
+            else
+            {
+                <text>In Active</text>
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DepartmentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
