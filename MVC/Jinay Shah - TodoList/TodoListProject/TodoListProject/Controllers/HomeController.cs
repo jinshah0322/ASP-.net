@@ -33,9 +33,17 @@ namespace TodoListProject.Controllers
         {
             if (ModelState.IsValid == true)
             {
-                db.Tasks.Add(e);
-                db.SaveChanges();
-                TempData["InsertMessage"] = "Task Added!!";
+                
+                if(db.Tasks.Where(model=>model.TaskName == e.TaskName && model.IsCompleted==false).ToList().Count>0)
+                {
+                    TempData["InsertMessage"] = "Task with same name already exists!!";
+                }
+                else
+                {
+                    db.Tasks.Add(e);
+                    db.SaveChanges();
+                    TempData["InsertMessage"] = "Task Added!!";
+                }
                 return RedirectToAction("Index");
             }
             return View();

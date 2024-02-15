@@ -14,6 +14,8 @@
 
 @Html.DisplayTempData("InsertMessage", "Task Added!!", "green")
 
+@Html.DisplayTempData("InsertMessage", "Task with same name already exists!!", "red")
+
 @if (TempData["CompleteMessage"] != null && TempData["CompleteMessage"].ToString() == "Task Completed!!")
 {
     @Html.DisplayTempData("CompleteMessage", "Task Completed!!", "green")
@@ -22,6 +24,7 @@
 @Html.DisplayTempData("DeleteMessage", "Task Deleted Successfully!!", "red")
 
 @Html.DisplayTempData("UpdateMessage", "Task updated!!", "green")
+
 
 <table class="table">
     <tr>
@@ -62,7 +65,7 @@
         }
 
         $(document).ready(function () {
-            $('.displayMessage').fadeOut(1500);
+            $('.displayMessage').fadeOut(1750);
         });
     </script>
 }

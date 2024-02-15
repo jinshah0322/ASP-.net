@@ -4,9 +4,10 @@
     ViewBag.Title = "ShowTask";
 }
 
-<h2>Show Task</h2>
+<h2>ShowTask</h2>
 
 <div>
+    <h4>Task</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -22,14 +23,7 @@
         </dt>
 
         <dd>
-            @if (Model.IsCompleted)
-            {
-                <p>True</p>
-            }
-            else 
-            { 
-                <p>False</p>
-            }
+            @Html.DisplayFor(model => model.IsCompleted)
         </dd>
 
     </dl>
