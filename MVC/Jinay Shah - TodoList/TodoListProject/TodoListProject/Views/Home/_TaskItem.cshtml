@@ -1,0 +1,26 @@
+﻿@model TodoListProject.Models.Task
+
+@{
+    ViewBag.Title = "_TaskItem";
+}
+
+<tr>
+    <td>
+        <form method="post" action="@Url.Action("Complete", new { id = Model.Id })">
+            @Html.AntiForgeryToken()
+            @Html.Hidden("id", Model.Id)
+            <div style="width: 600px;">
+                <input type="checkbox" class="checkbox-button" onchange="completeTask(this)" @(Model.IsCompleted ? "checked" : "") />
+                @Html.DisplayFor(model => model.TaskName)
+            </div>
+        </form>
+    </td>
+    <td>
+        <form method="post" action="@Url.Action("Delete", new { id = Model.Id })">
+            @Html.AntiForgeryToken()
+            @Html.Hidden("id", Model.Id)
+            <button type="button" onclick="location.href='@Url.Action("ShowTask", new { id = Model.Id})'" class="btn btn-primary">Show Task</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </td>
+</tr>

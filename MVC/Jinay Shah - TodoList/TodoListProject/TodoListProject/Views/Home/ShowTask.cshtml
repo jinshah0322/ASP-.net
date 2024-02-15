@@ -1,0 +1,40 @@
+﻿@model TodoListProject.Models.Task
+
+@{
+    ViewBag.Title = "ShowTask";
+}
+
+<h2>Show Task</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCompleted)
+        </dt>
+
+        <dd>
+            @if (Model.IsCompleted)
+            {
+                <p>True</p>
+            }
+            else 
+            { 
+                <p>False</p>
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
