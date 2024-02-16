@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+
+@model Q_AManagement.Models.Question
+
+@{
+    ViewBag.Title = "View Questions";
+}
+
+<h2>View Questions</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.QuestionPaper.Title</h4>
+        <hr />
+        <p>@Html.DisplayFor(model => model.QuestionText)</p>
+        <div class="form-group">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="optionA" name="optionsRadios" value="optionA" @(Model.CorrectAnswer == Model.OptionA ? "checked disabled" : "")>
+                <label class="form-check-label" for="optionA">@Html.DisplayFor(model => model.OptionA)</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="optionB" name="optionsRadios" value="optionB" @(Model.CorrectAnswer == Model.OptionB ? "checked disabled" : "")>
+                <label class="form-check-label" for="optionB">@Html.DisplayFor(model => model.OptionB)</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="optionC" name="optionsRadios" value="optionC" @(Model.CorrectAnswer == Model.OptionC ? "checked disabled" : "")>
+                <label class="form-check-label" for="optionC">@Html.DisplayFor(model => model.OptionC)</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="optionD" name="optionsRadios" value="optionD" @(Model.CorrectAnswer == Model.OptionD ? "checked disabled" : "")>
+                <label class="form-check-label" for="optionD">@Html.DisplayFor(model => model.OptionD)</label>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.QuestionID }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-secondary" })
+    </div>
+</div>

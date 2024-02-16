@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+@model IEnumerable<Q_AManagement.Models.QuestionPaper>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Question Bank</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <button type="button" onclick="location.href='@Url.Action("", new { id = item.QuestionPaperID})'" class="btn btn-primary">View</button>
+            </td>
+        </tr>
+    }
+
+</table>

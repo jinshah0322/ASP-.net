@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QandAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="QuestionPaper">
+    <Key>
+      <PropertyRef Name="QuestionPaperID" />
+    </Key>
+    <Property Name="QuestionPaperID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatorID" Type="Int32" />
+    <NavigationProperty Name="Questions" Relationship="Self.FK_Question_QuestionPaper" FromRole="QuestionPapers" ToRole="Questions" />
+    <NavigationProperty Name="User" Relationship="Self.FK_QuestionPaper_Creator" FromRole="QuestionPapers" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="QuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionPaperID" Type="Int32" />
+    <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OptionB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OptionC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OptionD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CorrectAnswer" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="QuestionPaper" Relationship="Self.FK_Question_QuestionPaper" FromRole="Questions" ToRole="QuestionPapers" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="QuestionPapers" Relationship="Self.FK_QuestionPaper_Creator" FromRole="Users" ToRole="QuestionPapers" />
+  </EntityType>
+  <Association Name="FK_Question_QuestionPaper">
+    <End Role="QuestionPapers" Type="Self.QuestionPaper" Multiplicity="0..1" />
+    <End Role="Questions" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionPapers">
+        <PropertyRef Name="QuestionPaperID" />
+      </Principal>
+      <Dependent Role="Questions">
+        <PropertyRef Name="QuestionPaperID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QuestionPaper_Creator">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="QuestionPapers" Type="Self.QuestionPaper" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="QuestionPapers">
+        <PropertyRef Name="CreatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QandAEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="QuestionPapers" EntityType="Self.QuestionPaper" />
+    <EntitySet Name="Questions" EntityType="Self.Question" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Question_QuestionPaper" Association="Self.FK_Question_QuestionPaper">
+      <End Role="QuestionPapers" EntitySet="QuestionPapers" />
+      <End Role="Questions" EntitySet="Questions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QuestionPaper_Creator" Association="Self.FK_QuestionPaper_Creator">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="QuestionPapers" EntitySet="QuestionPapers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
