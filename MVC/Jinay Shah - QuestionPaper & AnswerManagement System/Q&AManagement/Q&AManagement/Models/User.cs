@@ -11,7 +11,8 @@ namespace Q_AManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,9 +22,13 @@ namespace Q_AManagement.Models
         }
     
         public int UserID { get; set; }
+        [Required]
         public string Username { get; set; }
+        [Required]
         public string Password { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public string Role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

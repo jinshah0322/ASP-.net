@@ -1,17 +1,14 @@
-﻿@using Q_AManagement.Helpers
+﻿@{
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
 
 @model Q_AManagement.Models.Question
 
 @{
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    ViewBag.Title = "EditQuestions";
 }
 
-@{
-    ViewBag.Title = "AddQuestions";
-}
-
-<h2>Add Questions</h2>
-@Html.DisplayTempData("QuestionMessage", "Question Added Successfully!!", "green", "left")
+<h2>Edit Question</h2>
 
 @using (Html.BeginForm())
 {
@@ -19,7 +16,9 @@
 
     <div class="form-horizontal">
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger displayMessage" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.QuestionID)
+
         <div class="form-group">
             @Html.LabelFor(model => model.QuestionText, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -70,9 +69,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Add" class="btn btn-primary mt-2" />
-                <a href="@Url.Action("closeQuestion")" class="btn btn-danger mt-2">Cancel</a>
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

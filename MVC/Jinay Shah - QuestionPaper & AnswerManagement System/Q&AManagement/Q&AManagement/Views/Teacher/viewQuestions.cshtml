@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 
-@model Q_AManagement.Models.Question
+@model IEnumerable<Q_AManagement.Models.Question>
 
 @{
     ViewBag.Title = "View Questions";
@@ -12,30 +12,36 @@
 
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">@Model.QuestionPaper.Title</h4>
+        <h4 class="card-title">@Model.First().QuestionPaper.Title</h4>
         <hr />
-        <p>@Html.DisplayFor(model => model.QuestionText)</p>
-        <div class="form-group">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="optionA" name="optionsRadios" value="optionA" @(Model.CorrectAnswer == Model.OptionA ? "checked disabled" : "")>
-                <label class="form-check-label" for="optionA">@Html.DisplayFor(model => model.OptionA)</label>
+        @foreach (var question in Model)
+        {
+            <p>@Html.DisplayFor(model => question.QuestionText)</p>
+            <div class="form-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="optionA_@question.QuestionID" name="optionsRadios_@question.QuestionID" value="optionA" @(question.CorrectAnswer.ToLower() == question.OptionA.ToLower() ? "checked disabled" : "")>
+                    <label class="form-check-label" for="optionA_@question.QuestionID">@Html.DisplayFor(model => question.OptionA)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="optionB_@question.QuestionID" name="optionsRadios_@question.QuestionID" value="optionB" @(question.CorrectAnswer.ToLower() == question.OptionB.ToLower() ? "checked disabled" : "")>
+                    <label class="form-check-label" for="optionB_@question.QuestionID">@Html.DisplayFor(model => question.OptionB)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="optionC_@question.QuestionID" name="optionsRadios_@question.QuestionID" value="optionC" @(question.CorrectAnswer.ToLower() == question.OptionC.ToLower() ? "checked disabled" : "")>
+                    <label class="form-check-label" for="optionC_@question.QuestionID">@Html.DisplayFor(model => question.OptionC)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="optionD_@question.QuestionID" name="optionsRadios_@question.QuestionID" value="optionD" @(question.CorrectAnswer.ToLower() == question.OptionD.ToLower() ? "checked disabled" : "")>
+                    <label class="form-check-label" for="optionD_@question.QuestionID">@Html.DisplayFor(model => question.OptionD)</label>
+                </div>
+                <div class="form-check form-check-inline d-flex justify-content-end">
+                    @Html.ActionLink("Edit", "EditQuestions", new { id = question.QuestionID }, new { @class = "btn btn-primary" })
+                </div>
+
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="optionB" name="optionsRadios" value="optionB" @(Model.CorrectAnswer == Model.OptionB ? "checked disabled" : "")>
-                <label class="form-check-label" for="optionB">@Html.DisplayFor(model => model.OptionB)</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="optionC" name="optionsRadios" value="optionC" @(Model.CorrectAnswer == Model.OptionC ? "checked disabled" : "")>
-                <label class="form-check-label" for="optionC">@Html.DisplayFor(model => model.OptionC)</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="optionD" name="optionsRadios" value="optionD" @(Model.CorrectAnswer == Model.OptionD ? "checked disabled" : "")>
-                <label class="form-check-label" for="optionD">@Html.DisplayFor(model => model.OptionD)</label>
-            </div>
+        }
+        <div class="card-footer">
+            @Html.ActionLink("Add New", "AddQuestions", new { id = Model.First().QuestionPaperID }, new { @class = "btn btn-success" })
         </div>
-    </div>
-    <div class="card-footer">
-        @Html.ActionLink("Edit", "Edit", new { id = Model.QuestionID }, new { @class = "btn btn-primary" }) |
-        @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-secondary" })
     </div>
 </div>

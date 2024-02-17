@@ -3,40 +3,26 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Q_AManagement.Controllers
 {
+    [CustomAuthorize]
     public class TeacherController : Controller
     {
-        // GET: Teacher
         QandAEntities db = new QandAEntities();
         public ActionResult Index()
         {
             int userID = Convert.ToInt32(Session["UserID"]);
-            if (Session["UserID"] == null)
-            {
-                return RedirectToAction("Login", "User");
-            }
-            else
-            {
-                var questionPaper = db.QuestionPapers.Where(model => model.CreatorID == userID).ToList();
-                return View(questionPaper);
-            }
+            var questionPaper = db.QuestionPapers.Where(model => model.CreatorID == userID).ToList();
+            return View(questionPaper);
         }
 
         public ActionResult Create()
         {
-            int userID = Convert.ToInt32(Session["UserID"]);
-            if (Session["UserID"] == null)
-            {
-                return RedirectToAction("Login", "User");
-            }
-            else
-            {
-                return View();
-            }
+            return View();
         }
 
 
@@ -67,15 +53,7 @@ namespace Q_AManagement.Controllers
 
         public ActionResult AddQuestions()
         {
-            int userID = Convert.ToInt32(Session["UserID"]);
-            if (Session["UserID"] == null)
-            {
-                return RedirectToAction("Login", "User");
-            }
-            else
-            {
-                return View();
-            }
+            return View();
         }
 
         [HttpPost]
@@ -85,16 +63,40 @@ namespace Q_AManagement.Controllers
             if (Session["QuestionPaperID"] != null)
             {
                 q.QuestionPaperID = Convert.ToInt32(Session["QuestionPaperID"]);
-                db.Questions.Add(q);
-                db.SaveChanges();
-                TempData["QuestionMessage"] = "Question Added Successfully!!";
-                return RedirectToAction("AddQuestions");
+
+                if(q.OptionA == null || q.OptionB == null || q.OptionC == null || q.OptionD == null)
+                {
+                    ModelState.AddModelError("", "All fields are mandetary.");
+                    return View(q);
+                }
+
+                if (q.OptionA == q.OptionB || q.OptionA == q.OptionC || q.OptionA == q.OptionD ||
+                    q.OptionB == q.OptionC || q.OptionB == q.OptionD || q.OptionC == q.OptionD)
+                {
+                    ModelState.AddModelError("", "Options cannot be the same.");
+                    return View(q);
+                }
+
+                if (q.CorrectAnswer.ToLower() == q.OptionA.ToLower() || q.CorrectAnswer.ToLower() == q.OptionB.ToLower() ||
+                    q.CorrectAnswer.ToLower() == q.OptionC.ToLower() || q.CorrectAnswer.ToLower() == q.OptionD.ToLower())
+                {
+                    db.Questions.Add(q);
+                    db.SaveChanges();
+                    TempData["QuestionMessage"] = "Question Added Successfully!!";
+                    return RedirectToAction("AddQuestions");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Correct answer must match one of the options.");
+                    return View(q);
+                }
             }
             else
             {
                 return RedirectToAction("Index");
             }
         }
+
 
         public ActionResult closeQuestion()
         {
@@ -122,10 +124,10 @@ namespace Q_AManagement.Controllers
                 var questionPaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
                 if (questionPaper != null)
                 {
-                    var questions = db.Questions.Where(model=>model.QuestionPaperID == id).ToList();
+                    var questions = db.Questions.Where(model => model.QuestionPaperID == id).ToList();
                     if (questions.Count > 0)
                     {
-                        foreach(var question in questions)
+                        foreach (var question in questions)
                         {
                             db.Questions.Remove(question);
                         }
@@ -140,31 +142,57 @@ namespace Q_AManagement.Controllers
 
         public ActionResult ViewQuestionPaper(int id)
         {
-            int userID = Convert.ToInt32(Session["UserID"]);
-            if (Session["UserID"] == null)
-            {
-                return RedirectToAction("Login", "User");
-            }
-            else
-            {
-                TempData["QuestionPaperID"] = id;
-                var QuestionPaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
-                return View(QuestionPaper);
-            }
+            var QuestionPaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
+            return View(QuestionPaper);
         }
 
         public ActionResult viewQuestions(int id)
         {
-            int userID = Convert.ToInt32(Session["UserID"]);
-            if (Session["UserID"] == null)
+            var questions = db.Questions.Where(model => model.QuestionPaperID == id).ToList();
+            return View(questions);
+        }
+
+        public ActionResult EditQuestionPaper(int id)
+        {
+            var questionpaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
+            return View(questionpaper);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditQuestionPaper(QuestionPaper qp)
+        {
+            if (ModelState.IsValid == true)
             {
-                return RedirectToAction("Login", "User");
+                int userID = Convert.ToInt32(Session["UserID"]);
+                qp.CreatorID = userID;
+                qp.Status = "Pending";
+                db.Entry(qp).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["UpdateMessage"] = "Question Paper updated Successfully!!";
+                return RedirectToAction("EditQuestionPaper");
             }
-            else
-            { 
-                var Question = db.Questions.Where(model => model.QuestionPaperID == id).FirstOrDefault();
-                return View(Question);
+            return View();
+        }
+
+        public ActionResult EditQuestions(int id)
+        {
+            var questions = db.Questions.Where(model => model.QuestionID == id).FirstOrDefault();
+            return View(questions);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditQuestions(Question q)
+        {
+            if (ModelState.IsValid == true)
+            {
+                db.Entry(q).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["UpdateMessage"] = "Task updated!!";
+                return RedirectToAction("Index");
             }
+            return View();
         }
     }
 }

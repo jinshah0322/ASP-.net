@@ -12,9 +12,9 @@
           <Property Name="QuestionPaperID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="CreationDate" Type="datetime" Nullable="false" />
-          <Property Name="CreatorID" Type="int" />
+          <Property Name="CreationDate" Type="date" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatorID" Type="int" />
         </EntityType>
         <EntityType Name="Questions">
           <Key>
@@ -27,7 +27,7 @@
           <Property Name="OptionB" Type="nvarchar(max)" />
           <Property Name="OptionC" Type="nvarchar(max)" />
           <Property Name="OptionD" Type="nvarchar(max)" />
-          <Property Name="CorrectAnswer" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="CorrectAnswer" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -87,7 +87,7 @@
           <Property Name="QuestionPaperID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatorID" Type="Int32" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Question_QuestionPaper" FromRole="QuestionPapers" ToRole="Questions" />
@@ -104,7 +104,7 @@
           <Property Name="OptionB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OptionC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OptionD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CorrectAnswer" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CorrectAnswer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="QuestionPaper" Relationship="Self.FK_Question_QuestionPaper" FromRole="Questions" ToRole="QuestionPapers" />
         </EntityType>
         <EntityType Name="User">

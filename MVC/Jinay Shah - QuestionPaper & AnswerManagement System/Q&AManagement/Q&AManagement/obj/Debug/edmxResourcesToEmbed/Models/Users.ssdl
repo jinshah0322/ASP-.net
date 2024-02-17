@@ -7,9 +7,9 @@
     <Property Name="QuestionPaperID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" />
-    <Property Name="CreationDate" Type="datetime" Nullable="false" />
-    <Property Name="CreatorID" Type="int" />
+    <Property Name="CreationDate" Type="date" Nullable="false" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatorID" Type="int" />
   </EntityType>
   <EntityType Name="Questions">
     <Key>
@@ -22,7 +22,7 @@
     <Property Name="OptionB" Type="nvarchar(max)" />
     <Property Name="OptionC" Type="nvarchar(max)" />
     <Property Name="OptionD" Type="nvarchar(max)" />
-    <Property Name="CorrectAnswer" Type="nvarchar" MaxLength="1" Nullable="false" />
+    <Property Name="CorrectAnswer" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>

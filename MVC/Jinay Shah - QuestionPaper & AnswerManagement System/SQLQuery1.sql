@@ -26,8 +26,8 @@ CREATE TABLE QuestionPapers (
 	QuestionPaperID INT PRIMARY KEY IDENTITY(1,1),
 	Title NVARCHAR(100) NOT NULL,
 	Description NVARCHAR(MAX),
-	CreationDate DATETIME NOT NULL DEFAULT GETDATE(),
-	Status NVARCHAR(50) NOT NULL ,
+	CreationDate DATE NOT NULL DEFAULT GETDATE(),
+	Status NVARCHAR(50) default 'Pending' ,
 	CreatorID INT, -- Foreign key referencing Users table
 	CONSTRAINT FK_QuestionPaper_Creator FOREIGN KEY (CreatorID) REFERENCES Users(UserID)
 );
@@ -38,9 +38,15 @@ ALTER TABLE QuestionPapers
 DROP COLUMN Status;
 
 ALTER TABLE QuestionPapers
+DROP COLUMN CreationDate;
+
+ALTER TABLE QuestionPapers
 ADD Status NVARCHAR(50) DEFAULT 'Pending' ;
 
-delete from QuestionPapers
+delete from QuestionPapers where QuestionPaperID=6;
+
+drop table QuestionPapers
+
 
 
 INSERT INTO QuestionPapers (Title, Description, Status, CreatorID)
@@ -51,6 +57,8 @@ VALUES
     ('English Literature Quiz', 'A quiz on famous works of literature and literary devices.', 'Pending', 6),
     ('Geography Assessment', 'An assessment covering geographical features, maps, and regions.', 'Approved', 6);
 
+select * from QuestionPapers
+
 
 CREATE TABLE Questions (
     QuestionID INT PRIMARY KEY IDENTITY(1,1),
@@ -60,9 +68,13 @@ CREATE TABLE Questions (
     OptionB NVARCHAR(MAX),
     OptionC NVARCHAR(MAX),
     OptionD NVARCHAR(MAX),
-    CorrectAnswer NVARCHAR(1) NOT NULL,
+    CorrectAnswer NVARCHAR(MAX) NOT NULL,
     CONSTRAINT FK_Question_QuestionPaper FOREIGN KEY (QuestionPaperID) REFERENCES QuestionPapers(QuestionPaperID)
 );
+
+drop table Questions
+
+delete from Questions where QuestionPaperID=6;
 
 select * from Questions
 

@@ -18,11 +18,21 @@
                 <dt class="col-sm-3">Creation Date:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.CreationDate)</dd>
                 <dt class="col-sm-3">Status:</dt>
-                <dd class="col-sm-9">@Html.DisplayFor(model => model.Status)</dd>
+                <dd class="col-sm-9">
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(model => model.Status, new SelectList(new[]
+                        {
+                            new SelectListItem { Text = "Pending", Value = "Pending" },
+                            new SelectListItem { Text = "Approved", Value = "Approved" }
+                        }, "Value", "Text"), "Select status", new { @class = "form-control", disabled = "disabled" })
+
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </dd>
             </dl>
             <div>
                 <button type="button" onclick="location.href='@Url.Action("ViewQuestions", new { id = Model.QuestionPaperID})'" class="btn btn-success">View Questions</button>
-                <button type="button" onclick="location.href='@Url.Action("Edit", new { id = Model.QuestionPaperID})'" class="btn btn-primary ">Edit</button>
+                <button type="button" onclick="location.href='@Url.Action("EditQuestionPaper", new { id = Model.QuestionPaperID})'" class="btn btn-primary ">Edit Question Paper</button>
                 <button type="button" onclick="location.href='@Url.Action("Index", "Teacher")'" class="btn btn-danger ">Go Back</button>
             </div>
         </div>
