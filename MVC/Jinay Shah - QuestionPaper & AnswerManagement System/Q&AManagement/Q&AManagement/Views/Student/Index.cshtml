@@ -30,7 +30,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <button type="button" onclick="location.href='@Url.Action("", new { id = item.QuestionPaperID})'" class="btn btn-primary">View</button>
+                <button type="button" onclick="location.href='@Url.Action("ViewQuestionPaper", new { id = item.QuestionPaperID})'" class="btn btn-primary">View</button>
             </td>
         </tr>
     }

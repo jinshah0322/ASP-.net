@@ -13,6 +13,7 @@
 <div class="container marginLeft">
     <h2 class="mt-4">Edit Question Paper</h2>
     @Html.DisplayTempData("UpdateMessage", "Question Paper updated Successfully!!", "green", "left")
+
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -63,7 +64,7 @@
                     <div class="col-sm-offset-3 col-sm-9">
                         <input type="submit" value="Save" class="btn btn-primary mt-2" />
                         <button type="button" onclick="location.href='@Url.Action("ViewQuestions", new { id = Model.QuestionPaperID})'" class="btn btn-success mt-2">Edit Questions</button>
-                        <a href="@Url.Action("closeQuestion")" class="btn btn-danger mt-2">Go Back</a>
+                        <a href="@Url.Action("closeQuestion")" class="btn btn-danger mt-2">Home</a>
                     </div>
                 </div>
             </div>

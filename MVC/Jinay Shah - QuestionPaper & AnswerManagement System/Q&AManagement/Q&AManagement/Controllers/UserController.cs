@@ -103,6 +103,7 @@ namespace Q_AManagement.Controllers
                 if (decryptedPassword == u.Password)
                 {
                     Session["UserId"] = user.UserID;
+                    Session["Role"] = user.Role;
                     if(user.Role == "Admin")
                     {
                         return RedirectToAction("", "");

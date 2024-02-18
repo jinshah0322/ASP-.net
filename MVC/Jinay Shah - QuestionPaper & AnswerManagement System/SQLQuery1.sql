@@ -34,6 +34,10 @@ CREATE TABLE QuestionPapers (
 
 select * from QuestionPapers
 
+UPDATE QuestionPapers
+SET Status = 'Approved'
+WHERE QuestionPaperID = 1;
+
 ALTER TABLE QuestionPapers
 DROP COLUMN Status;
 
@@ -74,9 +78,13 @@ CREATE TABLE Questions (
 
 drop table Questions
 
-delete from Questions where QuestionPaperID=6;
+delete from Questions ;
 
 select * from Questions
+
+UPDATE Questions
+SET QuestionPaperID = 1
+WHERE QuestionID = 1;
 
 
 --CREATE TABLE Submission (

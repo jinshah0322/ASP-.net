@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+@model IEnumerable<Q_AManagement.Models.Question>
+
+@{
+    ViewBag.Title = "View Questions";
+}
+
+<h2>View Questions</h2>
+
+<div class="card">
+    <div class="card-body">
+        @if (Model.Any())
+        {
+            <h4 class="card-title">@Model.First().QuestionPaper.Title</h4>
+            <hr />
+            foreach (var question in Model)
+            {
+                <p>@Html.DisplayFor(model => question.QuestionText)</p>
+                <div class="form-group">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="optionA_@question.QuestionID" name="optionsRadios_@question.QuestionID" value="optionA" disabled)>
+                        <label class="form-check-label" for="optionA_@question.QuestionID" style="font-weight: bold; color: black;">@Html.DisplayFor(model => question.OptionA)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="optionB_@question.QuestionID" name="optionsRadios_@question.QuestionID" value="optionB" disabled>
+                        <label class="form-check-label" for="optionB_@question.QuestionID" style="font-weight: bold; color: black;">@Html.DisplayFor(model => question.OptionB)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="optionC_@question.QuestionID" name="optionsRadios_@question.QuestionID" value="optionC" disabled>
+                        <label class="form-check-label" for="optionC_@question.QuestionID" style="font-weight: bold; color: black;">@Html.DisplayFor(model => question.OptionC)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="optionD_@question.QuestionID" name="optionsRadios_@question.QuestionID" value="optionD" disabled>
+                        <label class="form-check-label" for="optionD_@question.QuestionID" style="font-weight: bold; color: black;">@Html.DisplayFor(model => question.OptionD)</label>
+                    </div>
+                </div>
+            }
+            <div class="card-footer">
+                @Html.ActionLink("Home", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        }
+        else
+        {
+            <div class="card-footer">
+                @Html.ActionLink("Home", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        }
+
+    </div>
+</div>

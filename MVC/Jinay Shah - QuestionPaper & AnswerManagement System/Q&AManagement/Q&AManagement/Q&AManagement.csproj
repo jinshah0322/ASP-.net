@@ -124,6 +124,8 @@
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filter\CustomAuthorizeAttribute .cs" />
+    <Compile Include="Filter\StudentAuthorizationFilter.cs" />
+    <Compile Include="Filter\TeacherAuthorizationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,6 +233,8 @@
     <Content Include="Views\Teacher\viewQuestions.cshtml" />
     <Content Include="Views\Teacher\EditQuestionPaper.cshtml" />
     <Content Include="Views\Teacher\EditQuestions.cshtml" />
+    <Content Include="Views\Student\ViewQuestionPaper.cshtml" />
+    <Content Include="Views\Student\viewQuestions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

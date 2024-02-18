@@ -1,0 +1,29 @@
+﻿@using Q_AManagement.Helpers
+
+@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+@model Q_AManagement.Models.QuestionPaper
+
+@{
+    ViewBag.Title = "ViewQuestionPaper";
+}
+
+<div class="container marginLeft">
+    <h2 class="mt-4">View Question Paper</h2>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4 class="card-title">@Html.DisplayFor(model => model.Title)</h4>
+            <p class="card-text">@Html.DisplayFor(model => model.Description)</p>
+            <dl class="row">
+                <dt >Creation Date</dt>
+                <dd >@Html.DisplayFor(model => model.CreationDate)</dd>
+            </dl>
+            <div>
+                <button type="button" onclick="location.href='@Url.Action("ViewQuestions", new { id = Model.QuestionPaperID})'" class="btn btn-success">View Questions</button>
+                <button type="button" onclick="location.href='@Url.Action("Index", "Student")'" class="btn btn-danger ">Home</button>
+            </div>
+        </div>
+    </div>
+</div>

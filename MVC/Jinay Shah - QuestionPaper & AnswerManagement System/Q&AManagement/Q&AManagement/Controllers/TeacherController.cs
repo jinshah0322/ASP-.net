@@ -1,4 +1,5 @@
-﻿using Q_AManagement.Models;
+﻿using Q_AManagement.Filter;
+using Q_AManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 namespace Q_AManagement.Controllers
 {
     [CustomAuthorize]
+    [TeacherAuthorizationFilter]
     public class TeacherController : Controller
     {
         QandAEntities db = new QandAEntities();
@@ -149,13 +151,23 @@ namespace Q_AManagement.Controllers
         public ActionResult viewQuestions(int id)
         {
             var questions = db.Questions.Where(model => model.QuestionPaperID == id).ToList();
+            Session["QuestionPaperID"] = id;
+            var status = db.QuestionPapers.Where(model=>model.QuestionPaperID==id).FirstOrDefault()?.Status;
+            ViewBag.Status = status;
             return View(questions);
         }
 
         public ActionResult EditQuestionPaper(int id)
         {
             var questionpaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
-            return View(questionpaper);
+            if(questionpaper.Status == "Approved")
+            {
+                return RedirectToAction("ViewQuestionPaper", new { id = id });
+            }
+            else
+            {
+                return View(questionpaper);
+            }
         }
 
         [HttpPost]
@@ -175,9 +187,10 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
-        public ActionResult EditQuestions(int id)
+        public ActionResult EditQuestions(int qpid,int qid)
         {
-            var questions = db.Questions.Where(model => model.QuestionID == id).FirstOrDefault();
+            var questions = db.Questions.Where(model => model.QuestionPaperID == qpid && model.QuestionID == qid).FirstOrDefault();
+            Session["QuestionPaperID"] = qpid;
             return View(questions);
         }
 
@@ -187,6 +200,7 @@ namespace Q_AManagement.Controllers
         {
             if (ModelState.IsValid == true)
             {
+                q.QuestionPaperID = Convert.ToInt32(Session["QuestionPaperID"]);
                 db.Entry(q).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["UpdateMessage"] = "Task updated!!";
