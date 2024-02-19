@@ -19,6 +19,7 @@ namespace Q_AManagement.Models
         public QuestionPaper()
         {
             this.Questions = new HashSet<Question>();
+            this.Submissions = new HashSet<Submission>();
         }
     
         public int QuestionPaperID { get; set; }
@@ -35,5 +36,7 @@ namespace Q_AManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Submission> Submissions { get; set; }
     }
 }

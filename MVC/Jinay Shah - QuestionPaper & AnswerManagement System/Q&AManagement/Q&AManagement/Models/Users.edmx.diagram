@@ -10,6 +10,10 @@
         <EntityTypeShape EntityType="QandAModel.User" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="QandAModel.FK_Question_QuestionPaper" ManuallyRouted="false" />
         <AssociationConnector Association="QandAModel.FK_QuestionPaper_Creator" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QandAModel.Submission" Width="1.5" PointX="7.5" PointY="1.125" />
+        <AssociationConnector Association="QandAModel.FK_Submission_QuestionPaper" />
+        <AssociationConnector Association="QandAModel.FK_Submission_Question" />
+        <AssociationConnector Association="QandAModel.FK_Submission_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

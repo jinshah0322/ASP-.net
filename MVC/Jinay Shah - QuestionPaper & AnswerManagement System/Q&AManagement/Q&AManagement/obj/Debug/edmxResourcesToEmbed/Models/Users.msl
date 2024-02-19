@@ -38,5 +38,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Submissions">
+      <EntityTypeMapping TypeName="QandAModel.Submission">
+        <MappingFragment StoreEntitySet="Submission">
+          <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+          <ScalarProperty Name="TickedAnswer" ColumnName="TickedAnswer" />
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="QuestionPaperID" ColumnName="QuestionPaperID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="SubmissionID" ColumnName="SubmissionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

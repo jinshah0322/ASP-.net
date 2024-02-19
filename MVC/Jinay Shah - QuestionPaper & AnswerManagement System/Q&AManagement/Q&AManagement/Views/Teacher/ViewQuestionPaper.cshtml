@@ -24,6 +24,7 @@
                     <div class="col-sm-9">
                         @Html.DropDownListFor(model => model.Status, new SelectList(new[]
                         {
+                            new SelectListItem { Text = "Draft", Value = "Draft" },
                             new SelectListItem { Text = "Pending", Value = "Pending" },
                             new SelectListItem { Text = "Approved", Value = "Approved" }
                         }, "Value", "Text"), "Select status", new { @class = "form-control", disabled = "disabled" })
@@ -33,19 +34,33 @@
                 </dd>
             </dl>
             <div>
-                @if (!(Model.Status == "Approved"))
+                @if ((Model.Status == "Draft") || (Model.Status == "Rejected"))
+                {
+                    <button type="button" onclick="location.href='@Url.Action("ViewQuestions", new { id = Model.QuestionPaperID})'" class="btn btn-success">View Questions</button>
+                    <button type="button" onclick="location.href='@Url.Action("EditQuestionPaper", new { id = Model.QuestionPaperID})'" class="btn btn-primary ">Edit Question Paper</button>
+                    <button type="button" onclick="confirmRequest()" class="btn btn-warning text-light">Request Approval</button>
+                    <button type="button" onclick="location.href='@Url.Action("Index", "Teacher")'" class="btn btn-danger ">Home</button>
+                }
+                else if (Model.Status == "Pending")
                 {
                     <button type="button" onclick="location.href='@Url.Action("ViewQuestions", new { id = Model.QuestionPaperID})'" class="btn btn-success">View Questions</button>
                     <button type="button" onclick="location.href='@Url.Action("EditQuestionPaper", new { id = Model.QuestionPaperID})'" class="btn btn-primary ">Edit Question Paper</button>
                     <button type="button" onclick="location.href='@Url.Action("Index", "Teacher")'" class="btn btn-danger ">Home</button>
                 }
-                else
+                else if (Model.Status == "Approved")
                 {
                     <button type="button" onclick="location.href='@Url.Action("ViewQuestions", new { id = Model.QuestionPaperID})'" class="btn btn-success">View Questions</button>
                     <button type="button" onclick="location.href='@Url.Action("Index", "Teacher")'" class="btn btn-danger ">Home</button>
                 }
-
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function confirmRequest() {
+        if (confirm("Are you sure you want to request approval as this process is not reversible?")) {
+            location.href = '@Url.Action("RequestApproval", new { id = Model.QuestionPaperID})';
+        }
+    }
+</script>

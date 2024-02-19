@@ -28,5 +28,6 @@ namespace Q_AManagement.Models
         public virtual DbSet<QuestionPaper> QuestionPapers { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Submission> Submissions { get; set; }
     }
 }

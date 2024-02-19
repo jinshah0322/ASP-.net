@@ -32,5 +32,23 @@ namespace Q_AManagement.Controllers
             var questions = db.Questions.Where(model => model.QuestionPaperID == id).ToList();
             return View(questions);
         }
+
+        public ActionResult AnswerQuestionPaper(int id)
+        {
+            var questions = db.Questions.Where(model => model.QuestionPaperID == id).ToList();
+            return View(questions);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AnswerQuestionPaper(IEnumerable<Q_AManagement.Models.Question> questions)
+        {
+            if (questions == null || !questions.Any())
+            {
+                ModelState.AddModelError("", "No answers provided.");
+                return RedirectToAction("AnswerQuestionPaper", new { id = questions.First().QuestionPaperID });
+            }
+            return View();
+        }
     }
 }

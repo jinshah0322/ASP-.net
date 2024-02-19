@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    ViewBag.Title = "AnswerQuestionPaper";
+}
+
+@model IEnumerable<Q_AManagement.Models.Question>
+
+@using (Html.BeginForm("AnswerQuestionPaper", "Student", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    if (Model.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">@Model.First().QuestionPaper.Title</h4>
+                <hr />
+                @foreach (var question in Model)
+                {
+                    <p>@Html.DisplayFor(model => question.QuestionText)</p>
+                    <div class="form-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="@($"optionA_{question.QuestionID}")" name="@($"Answer[{question.QuestionID}]")" value="optionA" />
+                            <label class="form-check-label" for="@($"optionA_{question.QuestionID}")">@Html.DisplayFor(model => question.OptionA)</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="@($"optionB_{question.QuestionID}")" name="@($"Answer[{question.QuestionID}]")" value="optionB" />
+                            <label class="form-check-label" for="@($"optionB_{question.QuestionID}")">@Html.DisplayFor(model => question.OptionB)</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="@($"optionC_{question.QuestionID}")" name="@($"Answer[{question.QuestionID}]")" value="optionC" />
+                            <label class="form-check-label" for="@($"optionC_{question.QuestionID}")">@Html.DisplayFor(model => question.OptionC)</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="@($"optionD_{question.QuestionID}")" name="@($"Answer[{question.QuestionID}]")" value="optionD" />
+                            <label class="form-check-label" for="@($"optionD_{question.QuestionID}")">@Html.DisplayFor(model => question.OptionD)</label>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit Test</button>
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>No questions available.</p>
+    }
+}

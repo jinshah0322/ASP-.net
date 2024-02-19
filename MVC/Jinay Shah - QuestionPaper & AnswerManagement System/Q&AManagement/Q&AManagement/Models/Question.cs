@@ -14,6 +14,12 @@ namespace Q_AManagement.Models
     
     public partial class Question
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Question()
+        {
+            this.Submissions = new HashSet<Submission>();
+        }
+    
         public int QuestionID { get; set; }
         public Nullable<int> QuestionPaperID { get; set; }
         public string QuestionText { get; set; }
@@ -24,5 +30,7 @@ namespace Q_AManagement.Models
         public string CorrectAnswer { get; set; }
     
         public virtual QuestionPaper QuestionPaper { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Submission> Submissions { get; set; }
     }
 }

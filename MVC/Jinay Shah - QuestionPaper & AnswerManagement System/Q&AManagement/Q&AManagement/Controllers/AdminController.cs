@@ -1,41 +1,49 @@
-﻿using Q_AManagement.Filter;
-using Q_AManagement.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Q_AManagement.Filter;
+using Q_AManagement.Helpers;
+using Q_AManagement.Models;
+
 
 namespace Q_AManagement.Controllers
 {
     [CustomAuthorize]
-    [TeacherAuthorizationFilter]
-    public class TeacherController : Controller
+    [AdminAuthorizationFilter]
+    public class AdminController : Controller
     {
-        QandAEntities db = new QandAEntities();
+        private QandAEntities db = new QandAEntities();
+
         public ActionResult Index()
         {
-            int userID = Convert.ToInt32(Session["UserID"]);
-            var questionPaper = db.QuestionPapers.Where(model => model.CreatorID == userID).ToList();
-            return View(questionPaper);
+            var query = from questionPaper in db.QuestionPapers
+                        join user in db.Users on questionPaper.CreatorID equals user.UserID
+                        select new QuestionPaperWithCreator
+                        {
+                            QuestionPaper = questionPaper,
+                            CreatorName = user.Username
+                        };
+            return View(query.ToList());
         }
 
-        public ActionResult Create()
+        public ActionResult CreateQuestionPaper()
         {
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(QuestionPaper qp)
+        public ActionResult CreateQuestionPaper(QuestionPaper qp)
         {
             if (ModelState.IsValid == true)
             {
                 int userID = Convert.ToInt32(Session["UserID"]);
-                if (db.QuestionPapers.Where(model => model.Title == qp.Title && model.CreatorID == userID).ToList().Count > 0)
+                if (db.QuestionPapers.Where(model => model.Title == qp.Title).ToList().Count > 0)
                 {
                     TempData["CreateMessage"] = "QuestionPaper already exists";
                     return RedirectToAction("Create");
@@ -99,7 +107,6 @@ namespace Q_AManagement.Controllers
             }
         }
 
-
         public ActionResult closeQuestion()
         {
             if (Session["QuestionPaperID"] != null)
@@ -144,8 +151,15 @@ namespace Q_AManagement.Controllers
 
         public ActionResult ViewQuestionPaper(int id)
         {
-            var QuestionPaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
-            return View(QuestionPaper);
+            var query = from questionPaper in db.QuestionPapers
+                        join user in db.Users on questionPaper.CreatorID equals user.UserID
+                        where questionPaper.QuestionPaperID == id
+                        select new QuestionPaperWithCreator
+                        {
+                            QuestionPaper = questionPaper,
+                            CreatorName = user.Username
+                        };
+            return View(query.FirstOrDefault());
         }
 
         public ActionResult viewQuestions(int id)
@@ -160,14 +174,7 @@ namespace Q_AManagement.Controllers
         public ActionResult EditQuestionPaper(int id)
         {
             var questionpaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
-            if (questionpaper.Status == "Approved")
-            {
-                return RedirectToAction("ViewQuestionPaper", new { id = id });
-            }
-            else
-            {
-                return View(questionpaper);
-            }
+            return View(questionpaper);
         }
 
         [HttpPost]
@@ -176,9 +183,6 @@ namespace Q_AManagement.Controllers
         {
             if (ModelState.IsValid == true)
             {
-                int userID = Convert.ToInt32(Session["UserID"]);
-                qp.CreatorID = userID;
-                qp.Status = "Draft";
                 db.Entry(qp).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["UpdateMessage"] = "Question Paper updated Successfully!!";
@@ -217,7 +221,7 @@ namespace Q_AManagement.Controllers
                     q.QuestionPaperID = Convert.ToInt32(Session["QuestionPaperID"]);
                     db.Entry(q).State = EntityState.Modified;
                     db.SaveChanges();
-                    TempData["UpdateMessage"] = "Task updated!!";
+                    TempData["UpdateMessage"] = "Question updated Successfully!!";
                     return RedirectToAction("viewQuestions", new { id = q.QuestionPaperID });
                 }
                 else
@@ -238,20 +242,107 @@ namespace Q_AManagement.Controllers
                 db.SaveChanges();
                 TempData["DeleteMessage"] = "Question Deleted Successfully!!";
             }
-            return RedirectToAction("viewQuestions", new {id=qpid});
+            return RedirectToAction("viewQuestions", new { id = qpid });
         }
 
-
-        public ActionResult RequestApproval(int id)
+        public ActionResult Users()
         {
-            var questionpaper = db.QuestionPapers.FirstOrDefault(model => model.QuestionPaperID == id);
-            if (questionpaper != null)
+            return View(db.Users.ToList());
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
             {
-                questionpaper.Status = "Pending";
-                db.SaveChanges();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return RedirectToAction("ViewQuestionPaper", new { id = id });
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "UserID,Username,Password,Email,Role")] User user)
+        {
+            PasswordEncryptionDecryption obj = new PasswordEncryptionDecryption();  
+            if (ModelState.IsValid)
+            {
+                user.Password = obj.EncryptString(user.Password);
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Users");
+            }
+
+            return View(user);
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "UserID,Username,Password,Email,Role")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Users");
+            }
+            return View(user);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Users");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
-
 }

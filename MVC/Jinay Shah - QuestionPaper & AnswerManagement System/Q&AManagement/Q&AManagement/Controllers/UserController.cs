@@ -3,16 +3,15 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Web.Mvc;
+using Q_AManagement.Helpers;
 
 namespace Q_AManagement.Controllers
 {
     public class UserController : Controller
     {
         QandAEntities db = new QandAEntities();
-
+        PasswordEncryptionDecryption obj = new PasswordEncryptionDecryption();
         public ActionResult Register()
         {
             if (Session["UserID"] == null)
@@ -25,7 +24,7 @@ namespace Q_AManagement.Controllers
                 var user = db.Users.Where(model => model.UserID == userID).FirstOrDefault();
                 if (user.Role == "Admin")
                 {
-                    return RedirectToAction("", "");
+                    return RedirectToAction("Index", "Admin");
                 }
                 else if (user.Role == "Student")
                 {
@@ -52,7 +51,7 @@ namespace Q_AManagement.Controllers
                     }
                     else
                     {
-                        string encryptedPassword = EncryptString(u.Password);
+                        string encryptedPassword = obj.EncryptString(u.Password);
                         u.Password = encryptedPassword;
 
                         db.Users.Add(u);
@@ -77,7 +76,7 @@ namespace Q_AManagement.Controllers
                 var user = db.Users.Where(model => model.UserID == userID).FirstOrDefault();
                 if (user.Role == "Admin")
                 {
-                    return RedirectToAction("", "");
+                    return RedirectToAction("Index", "Admin");
                 }
                 else if (user.Role == "Student")
                 {
@@ -98,7 +97,7 @@ namespace Q_AManagement.Controllers
             var user = db.Users.FirstOrDefault(model => model.Email == u.Email);
             if (user != null)
             {
-                string decryptedPassword = DecryptString(user.Password);
+                string decryptedPassword = obj.DecryptString(user.Password);
 
                 if (decryptedPassword == u.Password)
                 {
@@ -106,7 +105,7 @@ namespace Q_AManagement.Controllers
                     Session["Role"] = user.Role;
                     if(user.Role == "Admin")
                     {
-                        return RedirectToAction("", "");
+                        return RedirectToAction("Index", "Admin");
                     }
                     else if(user.Role == "Student")
                     {
@@ -114,7 +113,7 @@ namespace Q_AManagement.Controllers
                     }
                     else if(user.Role == "Teacher")
                     {
-                        return RedirectToAction("", "");
+                        return RedirectToAction("Index", "Teacher");
                     }
                 }
             }
@@ -128,55 +127,6 @@ namespace Q_AManagement.Controllers
             Session.Clear();
             System.Web.Security.FormsAuthentication.SignOut();
             return RedirectToAction("Login","User");
-        }
-
-        private string EncryptString(string plainText)
-        {
-            const string EncryptionKey = "qWE7&5pZ@2#9Df!1gH*3sKl$8oP5mN^0";
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.Key = Encoding.UTF8.GetBytes(EncryptionKey);
-                aesAlg.IV = new byte[16];
-
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-                using (var msEncrypt = new System.IO.MemoryStream())
-                {
-                    using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (var swEncrypt = new System.IO.StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(plainText);
-                        }
-                    }
-                    return Convert.ToBase64String(msEncrypt.ToArray());
-                }
-            }
-        }
-
-        public static string DecryptString(string cipherText)
-        {
-            const string EncryptionKey = "qWE7&5pZ@2#9Df!1gH*3sKl$8oP5mN^0";
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.Key = Encoding.UTF8.GetBytes(EncryptionKey);
-                aesAlg.IV = new byte[16];
-
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-                byte[] cipherBytes = Convert.FromBase64String(cipherText);
-
-                using (MemoryStream msDecrypt = new MemoryStream(cipherBytes))
-                {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            return srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
-            }
         }
     }
 }

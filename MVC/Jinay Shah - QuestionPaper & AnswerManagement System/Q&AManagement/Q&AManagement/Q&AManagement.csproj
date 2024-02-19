@@ -120,9 +120,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filter\AdminAuthorizationFilter.cs" />
     <Compile Include="Filter\CustomAuthorizeAttribute .cs" />
     <Compile Include="Filter\StudentAuthorizationFilter.cs" />
     <Compile Include="Filter\TeacherAuthorizationFilter.cs" />
@@ -130,10 +132,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\customHtmlHelper.cs" />
+    <Compile Include="Helpers\PasswordEncryptionDecryption.cs" />
     <Compile Include="Models\Question.cs">
       <DependentUpon>Users.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\QuestionPaper.cs">
+      <DependentUpon>Users.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionPaperWithCreator.cs" />
+    <Compile Include="Models\Submission.cs">
       <DependentUpon>Users.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
@@ -235,6 +242,20 @@
     <Content Include="Views\Teacher\EditQuestions.cshtml" />
     <Content Include="Views\Student\ViewQuestionPaper.cshtml" />
     <Content Include="Views\Student\viewQuestions.cshtml" />
+    <Content Include="Views\Student\AnswerQuestionPaper.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Admin\ViewQuestionPaper.cshtml" />
+    <Content Include="Views\Admin\viewQuestions.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
+    <Content Include="Views\Admin\AddQuestions.cshtml" />
+    <Content Include="Views\Admin\EditQuestionPaper.cshtml" />
+    <Content Include="Views\Admin\EditQuestions.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
+    <Content Include="Views\Admin\Details.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\CreateQuestionPaper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

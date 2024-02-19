@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Q_AManagement.Models.User>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Manage Users</h2>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role)
+        </td>
+        <td class="d-flex justify-content-end">
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }, new { @class = "btn btn-primary me-2" }) 
+            @Html.ActionLink("Details", "Details", new { id=item.UserID }, new { @class = "btn btn-success me-2" }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserID }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -12,13 +12,14 @@ CREATE TABLE Users (
 
 select * from Users
 delete from Users where UserID=4
+drop table Users
 
 INSERT INTO Users (Username, Password, Email, Role)
 VALUES ('teacher1', 'Teacher@123', 'teacher1@example.com', 'Teacher'),
        ('teacher2', 'Teacher@456', 'teacher2@example.com', 'Teacher'),
 	   ('student1', 'Student@123', 'student1@example.com', 'Student'),
        ('student2', 'student456', 'student2@example.com', 'Student'),
-       ('admin', 'admin123', 'admin@example.com', 'Admin');
+       ('admin', 'Admin1@123', 'admin@example.com', 'Admin');
 
 
 
@@ -35,8 +36,8 @@ CREATE TABLE QuestionPapers (
 select * from QuestionPapers
 
 UPDATE QuestionPapers
-SET Status = 'Approved'
-WHERE QuestionPaperID = 1;
+SET CreatorID = 1
+WHERE QuestionPaperID=1;
 
 ALTER TABLE QuestionPapers
 DROP COLUMN Status;
@@ -87,11 +88,14 @@ SET QuestionPaperID = 1
 WHERE QuestionID = 1;
 
 
---CREATE TABLE Submission (
---    SubmissionID INT PRIMARY KEY IDENTITY(1,1),
---    UserID INT, -- Foreign key referencing Users table
---    QuestionPaperID INT, -- Foreign key referencing QuestionPaper table
---    SubmissionDate DATETIME NOT NULL DEFAULT GETDATE(),
---    CONSTRAINT FK_Submission_User FOREIGN KEY (UserID) REFERENCES Users(UserID),
---    CONSTRAINT FK_Submission_QuestionPaper FOREIGN KEY (QuestionPaperID) REFERENCES QuestionPaper(QuestionPaperID)
---);
+CREATE TABLE Submission (
+    SubmissionID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT, -- Foreign key referencing Users table
+    QuestionPaperID INT, -- Foreign key referencing QuestionPaper table
+    QuestionID INT, -- Foreign key referencing Questions table
+    TickedAnswer NVARCHAR(100), -- Assuming the ticked answer can be a string
+    SubmissionDate DATETIME NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT FK_Submission_User FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    CONSTRAINT FK_Submission_QuestionPaper FOREIGN KEY (QuestionPaperID) REFERENCES QuestionPapers(QuestionPaperID),
+    CONSTRAINT FK_Submission_Question FOREIGN KEY (QuestionID) REFERENCES Questions(QuestionID)
+);
