@@ -18,7 +18,7 @@ INSERT INTO Users (Username, Password, Email, Role)
 VALUES ('teacher1', 'Teacher@123', 'teacher1@example.com', 'Teacher'),
        ('teacher2', 'Teacher@456', 'teacher2@example.com', 'Teacher'),
 	   ('student1', 'Student@123', 'student1@example.com', 'Student'),
-       ('student2', 'student456', 'student2@example.com', 'Student'),
+       ('student2', 'Student@456', 'student2@example.com', 'Student'),
        ('admin', 'Admin1@123', 'admin@example.com', 'Admin');
 
 
@@ -99,3 +99,7 @@ CREATE TABLE Submission (
     CONSTRAINT FK_Submission_QuestionPaper FOREIGN KEY (QuestionPaperID) REFERENCES QuestionPapers(QuestionPaperID),
     CONSTRAINT FK_Submission_Question FOREIGN KEY (QuestionID) REFERENCES Questions(QuestionID)
 );
+
+select * from Submission
+
+delete from Submission where QuestionPaperID=2

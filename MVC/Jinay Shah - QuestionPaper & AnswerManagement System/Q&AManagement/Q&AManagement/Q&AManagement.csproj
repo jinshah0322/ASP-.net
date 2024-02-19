@@ -139,6 +139,7 @@
     <Compile Include="Models\QuestionPaper.cs">
       <DependentUpon>Users.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuestionPaperWithSubmission.cs" />
     <Compile Include="Models\QuestionPaperWithCreator.cs" />
     <Compile Include="Models\Submission.cs">
       <DependentUpon>Users.tt</DependentUpon>

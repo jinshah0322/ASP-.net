@@ -1,51 +1,69 @@
-﻿@{
+﻿@model IEnumerable<Q_AManagement.Models.Question>
+
+@{
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
-    ViewBag.Title = "AnswerQuestionPaper";
+    ViewBag.Title = "Question Paper";
 }
 
-@model IEnumerable<Q_AManagement.Models.Question>
+<style>
+    .question {
+        margin-bottom: 20px;
+    }
 
-@using (Html.BeginForm("AnswerQuestionPaper", "Student", FormMethod.Post))
+    .options {
+        margin-top: 10px;
+    }
+
+    .option {
+        margin-right: 10px;
+    }
+
+    .radio-button {
+        margin-right: 5px;
+    }
+</style>
+
+<h2>Question Paper</h2>
+<hr />
+
+@using (Html.BeginForm("AnswerQuestionPaper", "Student", new { questionPaperId = ViewBag.QuestionPaperId }, FormMethod.Post, new { @class = "question-form" }))
 {
     @Html.AntiForgeryToken()
 
-    if (Model.Any())
-    {
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">@Model.First().QuestionPaper.Title</h4>
-                <hr />
-                @foreach (var question in Model)
-                {
-                    <p>@Html.DisplayFor(model => question.QuestionText)</p>
-                    <div class="form-group">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="@($"optionA_{question.QuestionID}")" name="@($"Answer[{question.QuestionID}]")" value="optionA" />
-                            <label class="form-check-label" for="@($"optionA_{question.QuestionID}")">@Html.DisplayFor(model => question.OptionA)</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="@($"optionB_{question.QuestionID}")" name="@($"Answer[{question.QuestionID}]")" value="optionB" />
-                            <label class="form-check-label" for="@($"optionB_{question.QuestionID}")">@Html.DisplayFor(model => question.OptionB)</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="@($"optionC_{question.QuestionID}")" name="@($"Answer[{question.QuestionID}]")" value="optionC" />
-                            <label class="form-check-label" for="@($"optionC_{question.QuestionID}")">@Html.DisplayFor(model => question.OptionC)</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="@($"optionD_{question.QuestionID}")" name="@($"Answer[{question.QuestionID}]")" value="optionD" />
-                            <label class="form-check-label" for="@($"optionD_{question.QuestionID}")">@Html.DisplayFor(model => question.OptionD)</label>
-                        </div>
+    <div class="question-container">
+        @foreach (var question in Model)
+        {
+            <div class="question">
+                <h4>@Html.DisplayFor(modelItem => question.QuestionText)</h4>
+                <div class="options">
+                    <div class="option">
+                        <label>
+                            @Html.RadioButton($"{question.QuestionID}", $"{ question.OptionA}", new { @class = "radio-button" }) <span>@Html.DisplayFor(modelItem => question.OptionA)</span>
+                        </label>
                     </div>
-                }
+                    <div class="option">
+                        <label>
+                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionB}", new { @class = "radio-button" }) <span>@Html.DisplayFor(modelItem => question.OptionB)</span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <label>
+                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionC}", new { @class = "radio-button" }) <span>@Html.DisplayFor(modelItem => question.OptionC)</span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <label>
+                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionD}", new { @class = "radio-button" }) <span>@Html.DisplayFor(modelItem => question.OptionD)</span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit Test</button>
-                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
-            </div>
-        </div>
-    }
-    else
-    {
-        <p>No questions available.</p>
-    }
+        }
+    </div>
+
+
+    <div class="submit-button-container">
+        <input type="submit" value="Submit" class="btn btn-primary submit-button mt-2" />
+        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger mt-2" })
+    </div>
 }

@@ -1,21 +1,27 @@
-﻿@{
+﻿@using Q_AManagement.Helpers
+
+@{
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 
-@model IEnumerable<Q_AManagement.Models.QuestionPaper>
+@model IEnumerable<Q_AManagement.Models.QuestionPaperWithSubmission>
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Question Bank</h2>
+@Html.DisplayTempData("examSubmitted", "You have successfully submitted the exam!!", "green", "left")
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.QuestionPaper.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.QuestionPaper.Description)
+        </th>
+        <th>
+            Submission Date
         </th>
         <th></th>
     </tr>
@@ -24,16 +30,34 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.QuestionPaper.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.QuestionPaper.Description)
+            </td>
+            <td>
+                @if (item.Submission != null)
+                {
+                    @item.Submission.SubmissionDate.ToString("dd-MM-yyyy")
+                }
+                else
+                {
+                    <p class="text-danger">-------------</p>
+                }
             </td>
             <td class="d-flex justify-content-end">
-                <button type="button" onclick="location.href='@Url.Action("ViewQuestionPaper", new { id = item.QuestionPaperID})'" class="btn btn-primary me-2">View</button>
-                <button type="button" onclick="location.href='@Url.Action("AnswerQuestionPaper", new { id = item.QuestionPaperID})'" class="btn btn-success">Attempt</button>
+                <button type="button" onclick="location.href='@Url.Action("ViewQuestionPaper", new { id = item.QuestionPaper.QuestionPaperID})'" class="btn btn-primary me-2">View</button>
+                @{
+                    if (item.Submission != null)
+                    {
+                        <button type="button" class="btn btn-success" disabled>Attempt</button>
+                    }
+                    else
+                    {
+                        <button type="button" onclick="location.href='@Url.Action("AnswerQuestionPaper", new { id = item.QuestionPaper.QuestionPaperID})'" class="btn btn-success">Attempt</button>
+                    }
+                }
             </td>
         </tr>
     }
-
 </table>

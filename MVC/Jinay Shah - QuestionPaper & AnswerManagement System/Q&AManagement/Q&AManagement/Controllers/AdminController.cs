@@ -46,7 +46,7 @@ namespace Q_AManagement.Controllers
                 if (db.QuestionPapers.Where(model => model.Title == qp.Title).ToList().Count > 0)
                 {
                     TempData["CreateMessage"] = "QuestionPaper already exists";
-                    return RedirectToAction("Create");
+                    return RedirectToAction("CreateQuestionPaper");
                 }
                 else
                 {
@@ -331,6 +331,22 @@ namespace Q_AManagement.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
+            if(user!=null)
+            {
+                var questionPaper = db.QuestionPapers.Where(model => model.CreatorID == id).FirstOrDefault();
+                if (questionPaper!=null)
+                {
+                    var questions = db.Questions.Where(model => model.QuestionPaperID == questionPaper.QuestionPaperID).ToList();
+                    if (questions.Count > 0)
+                    {
+                        foreach (var question in questions)
+                        {
+                            db.Questions.Remove(question);
+                        }
+                    }
+                }
+                db.QuestionPapers.Remove(questionPaper);
+            }
             db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Users");
