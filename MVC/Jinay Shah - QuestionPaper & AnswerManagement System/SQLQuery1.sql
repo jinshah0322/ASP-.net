@@ -6,12 +6,14 @@ CREATE TABLE Users (
     UserID INT PRIMARY KEY IDENTITY(1,1),
     Username NVARCHAR(50) NOT NULL,
     Password NVARCHAR(100) NOT NULL,
-    Email NVARCHAR(100) NOT NULL UNIQUE,
+    Email NVARCHAR(100) NOT NULL,
     Role NVARCHAR(50) NOT NULL
 );
 
 select * from Users
-delete from Users where UserID=4
+update Users set Role='Admin' where UserID=2
+
+delete from Users where UserID=5
 drop table Users
 
 INSERT INTO Users (Username, Password, Email, Role)
@@ -28,11 +30,12 @@ CREATE TABLE QuestionPapers (
 	Title NVARCHAR(100) NOT NULL,
 	Description NVARCHAR(MAX),
 	CreationDate DATE NOT NULL DEFAULT GETDATE(),
-	Status NVARCHAR(50) default 'Pending' ,
+	Status NVARCHAR(50) default 'Draft' ,
 	CreatorID INT, -- Foreign key referencing Users table
 	CONSTRAINT FK_QuestionPaper_Creator FOREIGN KEY (CreatorID) REFERENCES Users(UserID)
 );
 
+delete from QuestionPapers
 select * from QuestionPapers
 
 UPDATE QuestionPapers
@@ -100,6 +103,17 @@ CREATE TABLE Submission (
     CONSTRAINT FK_Submission_Question FOREIGN KEY (QuestionID) REFERENCES Questions(QuestionID)
 );
 
+ALTER TABLE Submission
+ADD isCorrect BIT;
+
+delete from Submission where QuestionPaperID=6
+
 select * from Submission
 
-delete from Submission where QuestionPaperID=2
+delete from Submission
+
+delete from Use
+
+SELECT *
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_TYPE = 'BASE TABLE';

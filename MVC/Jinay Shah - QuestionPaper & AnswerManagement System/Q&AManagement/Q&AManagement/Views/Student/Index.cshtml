@@ -38,19 +38,19 @@
             <td>
                 @if (item.Submission != null)
                 {
-                    @item.Submission.SubmissionDate.ToString("dd-MM-yyyy")
+                    @item.Submission.SubmissionDate
                 }
                 else
                 {
-                    <p class="text-danger">-------------</p>
+                    <span class="text-danger">-----------------------</span>
                 }
             </td>
-            <td class="d-flex justify-content-end">
+            <td>
                 <button type="button" onclick="location.href='@Url.Action("ViewQuestionPaper", new { id = item.QuestionPaper.QuestionPaperID})'" class="btn btn-primary me-2">View</button>
                 @{
                     if (item.Submission != null)
                     {
-                        <button type="button" class="btn btn-success" disabled>Attempt</button>
+                        <button type="button" onclick="location.href='@Url.Action("ViewScore", new { id = item.QuestionPaper.QuestionPaperID})'" class="btn btn-success">View Score</button>
                     }
                     else
                     {

@@ -16,9 +16,11 @@ namespace Q_AManagement.Controllers
         QandAEntities db = new QandAEntities();
         public ActionResult Index()
         {
+            int userID = Convert.ToInt16(Session["UserID"]);
+
             var query = from questionPaper in db.QuestionPapers
                         where questionPaper.Status == "Approved"
-                        join submission in db.Submissions
+                        join submission in db.Submissions.Where(s => s.UserID == userID)
                         on questionPaper.QuestionPaperID equals submission.QuestionPaperID into submissionGroup
                         from submission in submissionGroup.DefaultIfEmpty()
                         select new QuestionPaperWithSubmission
@@ -26,6 +28,7 @@ namespace Q_AManagement.Controllers
                             QuestionPaper = questionPaper,
                             Submission = submission
                         };
+
 
             var distinctQuery = query.GroupBy(q => q.QuestionPaper.QuestionPaperID)
                                       .Select(g => g.FirstOrDefault());
@@ -58,25 +61,25 @@ namespace Q_AManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AnswerQuestionPaper(int questionPaperId, FormCollection Answer)
         {
+
             for (int i = 1; i < Answer.Count; i++)
             {
-                var key = Answer.GetKey(i);
-                var parts = key.Split('|');
-                if (parts.Length == 2)
+                var questionId = Convert.ToInt16(Answer.GetKey(i));
+                var tickedAnswer = Answer[i];
+                var correctAnswer = db.Questions.Where(model=>model.QuestionID == questionId).FirstOrDefault().CorrectAnswer.ToString();
+                bool iscorrect;
+                if(correctAnswer == tickedAnswer) iscorrect= true;
+                else iscorrect= false;
+                var submission = new Submission
                 {
-                    var questionId = Convert.ToInt32(parts[0]);
-                    var selectedOption = parts[1];
-
-                    var submission = new Submission
-                    {
-                        UserID = Convert.ToInt32(Session["UserID"]),
-                        QuestionPaperID = questionPaperId,
-                        QuestionID = questionId,
-                        TickedAnswer = selectedOption,
-                        SubmissionDate = DateTime.Now
-                    };
-                    db.Submissions.Add(submission);
-                }
+                    UserID = Convert.ToInt32(Session["UserID"]),
+                    QuestionPaperID = questionPaperId,
+                    QuestionID =questionId,
+                    TickedAnswer = tickedAnswer,
+                    SubmissionDate = DateTime.Now,
+                    isCorrect = iscorrect
+                };
+                db.Submissions.Add(submission);
             }
 
             TempData["examSubmitted"] = "You have successfully submitted the exam!!";
@@ -85,5 +88,20 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult ViewScore(int id) 
+        {
+            int userId = Convert.ToInt32(Session["UserID"]);
+            var score = db.Submissions.Where(model=>model.QuestionPaperID == id && model.isCorrect == true && model.UserID == userId).Count();
+            var query = from questions in db.Questions
+                        join submissions in db.Submissions on questions.QuestionID equals submissions.QuestionID
+                        where submissions.QuestionPaperID == id && submissions.UserID == userId
+                        select new AllTableJoin
+                        {
+                            Questions = questions,
+                            Submissions = submissions,
+                            Score = score
+                        };
+            return View(query.ToList());
+        }
     }
 }

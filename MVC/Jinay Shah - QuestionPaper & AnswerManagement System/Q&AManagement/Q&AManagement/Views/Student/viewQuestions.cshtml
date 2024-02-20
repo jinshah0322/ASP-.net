@@ -38,10 +38,9 @@
                     </div>
                 </div>
             }
-    <div class="card-footer">
-        <button type="button" onclick="location.href='@Url.Action("AnswerQuestionPaper", new { id = Model.First().QuestionPaperID})'" class="btn btn-success">Attempt</button>
-        @Html.ActionLink("Go Back", "ViewQuestionPaper", new { id = Model.First().QuestionPaperID }, new { @class = "btn btn-primary" })
-    </div>
+            <div class="card-footer">
+                @Html.ActionLink("Go Back", "ViewQuestionPaper", new { id = Model.First().QuestionPaperID }, new { @class = "btn btn-primary" })
+            </div>
         }
         else
         {

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QandAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QandAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="QuestionPapers">
           <Key>
             <PropertyRef Name="QuestionPaperID" />
@@ -39,6 +39,7 @@
           <Property Name="QuestionID" Type="int" />
           <Property Name="TickedAnswer" Type="nvarchar" MaxLength="100" />
           <Property Name="SubmissionDate" Type="datetime" Nullable="false" />
+          <Property Name="isCorrect" Type="bit" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -136,7 +137,8 @@
             <End Role="Submission" EntitySet="Submission" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QandAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -152,7 +154,7 @@
           <Property Name="CreatorID" Type="Int32" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Question_QuestionPaper" FromRole="QuestionPapers" ToRole="Questions" />
           <NavigationProperty Name="User" Relationship="Self.FK_QuestionPaper_Creator" FromRole="QuestionPapers" ToRole="Users" />
-          <NavigationProperty Name="Submissions" Relationship="QandAModel.FK_Submission_QuestionPaper" FromRole="QuestionPaper" ToRole="Submission" />
+          <NavigationProperty Name="Submissions" Relationship="Self.FK_Submission_QuestionPaper" FromRole="QuestionPapers" ToRole="Submission" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -167,7 +169,22 @@
           <Property Name="OptionD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CorrectAnswer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="QuestionPaper" Relationship="Self.FK_Question_QuestionPaper" FromRole="Questions" ToRole="QuestionPapers" />
-          <NavigationProperty Name="Submissions" Relationship="QandAModel.FK_Submission_Question" FromRole="Question" ToRole="Submission" />
+          <NavigationProperty Name="Submissions" Relationship="Self.FK_Submission_Question" FromRole="Questions" ToRole="Submission" />
+        </EntityType>
+        <EntityType Name="Submission">
+          <Key>
+            <PropertyRef Name="SubmissionID" />
+          </Key>
+          <Property Name="SubmissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="QuestionPaperID" Type="Int32" />
+          <Property Name="QuestionID" Type="Int32" />
+          <Property Name="TickedAnswer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SubmissionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isCorrect" Type="Boolean" />
+          <NavigationProperty Name="QuestionPaper" Relationship="Self.FK_Submission_QuestionPaper" FromRole="Submission" ToRole="QuestionPapers" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Submission_Question" FromRole="Submission" ToRole="Questions" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Submission_User" FromRole="Submission" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -179,7 +196,7 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="QuestionPapers" Relationship="Self.FK_QuestionPaper_Creator" FromRole="Users" ToRole="QuestionPapers" />
-          <NavigationProperty Name="Submissions" Relationship="QandAModel.FK_Submission_User" FromRole="User" ToRole="Submission" />
+          <NavigationProperty Name="Submissions" Relationship="Self.FK_Submission_User" FromRole="Users" ToRole="Submission" />
         </EntityType>
         <Association Name="FK_Question_QuestionPaper">
           <End Role="QuestionPapers" Type="Self.QuestionPaper" Multiplicity="0..1" />
@@ -205,9 +222,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Submission_QuestionPaper">
+          <End Role="QuestionPapers" Type="Self.QuestionPaper" Multiplicity="0..1" />
+          <End Role="Submission" Type="Self.Submission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionPapers">
+              <PropertyRef Name="QuestionPaperID" />
+            </Principal>
+            <Dependent Role="Submission">
+              <PropertyRef Name="QuestionPaperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submission_Question">
+          <End Role="Questions" Type="Self.Question" Multiplicity="0..1" />
+          <End Role="Submission" Type="Self.Submission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="Submission">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submission_User">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Submission" Type="Self.Submission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Submission">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="QandAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="QuestionPapers" EntityType="Self.QuestionPaper" />
           <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="Submissions" EntityType="Self.Submission" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_Question_QuestionPaper" Association="Self.FK_Question_QuestionPaper">
             <End Role="QuestionPapers" EntitySet="QuestionPapers" />
@@ -217,70 +271,19 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="QuestionPapers" EntitySet="QuestionPapers" />
           </AssociationSet>
-          <EntitySet Name="Submissions" EntityType="QandAModel.Submission" />
-          <AssociationSet Name="FK_Submission_QuestionPaper" Association="QandAModel.FK_Submission_QuestionPaper">
-            <End Role="QuestionPaper" EntitySet="QuestionPapers" />
+          <AssociationSet Name="FK_Submission_QuestionPaper" Association="Self.FK_Submission_QuestionPaper">
+            <End Role="QuestionPapers" EntitySet="QuestionPapers" />
             <End Role="Submission" EntitySet="Submissions" />
           </AssociationSet>
-          <AssociationSet Name="FK_Submission_Question" Association="QandAModel.FK_Submission_Question">
-            <End Role="Question" EntitySet="Questions" />
+          <AssociationSet Name="FK_Submission_Question" Association="Self.FK_Submission_Question">
+            <End Role="Questions" EntitySet="Questions" />
             <End Role="Submission" EntitySet="Submissions" />
           </AssociationSet>
-          <AssociationSet Name="FK_Submission_User" Association="QandAModel.FK_Submission_User">
-            <End Role="User" EntitySet="Users" />
+          <AssociationSet Name="FK_Submission_User" Association="Self.FK_Submission_User">
+            <End Role="Users" EntitySet="Users" />
             <End Role="Submission" EntitySet="Submissions" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Submission">
-          <Key>
-            <PropertyRef Name="SubmissionID" />
-          </Key>
-          <Property Name="SubmissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="QuestionPaperID" Type="Int32" />
-          <Property Name="QuestionID" Type="Int32" />
-          <Property Name="TickedAnswer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SubmissionDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="QuestionPaper" Relationship="QandAModel.FK_Submission_QuestionPaper" FromRole="Submission" ToRole="QuestionPaper" />
-          <NavigationProperty Name="Question" Relationship="QandAModel.FK_Submission_Question" FromRole="Submission" ToRole="Question" />
-          <NavigationProperty Name="User" Relationship="QandAModel.FK_Submission_User" FromRole="Submission" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_Submission_QuestionPaper">
-          <End Type="QandAModel.QuestionPaper" Role="QuestionPaper" Multiplicity="0..1" />
-          <End Type="QandAModel.Submission" Role="Submission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QuestionPaper">
-              <PropertyRef Name="QuestionPaperID" />
-            </Principal>
-            <Dependent Role="Submission">
-              <PropertyRef Name="QuestionPaperID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Submission_Question">
-          <End Type="QandAModel.Question" Role="Question" Multiplicity="0..1" />
-          <End Type="QandAModel.Submission" Role="Submission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Question">
-              <PropertyRef Name="QuestionID" />
-            </Principal>
-            <Dependent Role="Submission">
-              <PropertyRef Name="QuestionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Submission_User">
-          <End Type="QandAModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="QandAModel.Submission" Role="Submission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Submission">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -313,6 +316,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Submissions">
+            <EntityTypeMapping TypeName="QandAModel.Submission">
+              <MappingFragment StoreEntitySet="Submission">
+                <ScalarProperty Name="SubmissionID" ColumnName="SubmissionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="QuestionPaperID" ColumnName="QuestionPaperID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="TickedAnswer" ColumnName="TickedAnswer" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+                <ScalarProperty Name="isCorrect" ColumnName="isCorrect" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="QandAModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -321,18 +337,6 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Submissions">
-            <EntityTypeMapping TypeName="QandAModel.Submission">
-              <MappingFragment StoreEntitySet="Submission">
-                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
-                <ScalarProperty Name="TickedAnswer" ColumnName="TickedAnswer" />
-                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
-                <ScalarProperty Name="QuestionPaperID" ColumnName="QuestionPaperID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="SubmissionID" ColumnName="SubmissionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

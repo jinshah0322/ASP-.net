@@ -34,6 +34,7 @@
     <Property Name="QuestionID" Type="int" />
     <Property Name="TickedAnswer" Type="nvarchar" MaxLength="100" />
     <Property Name="SubmissionDate" Type="datetime" Nullable="false" />
+    <Property Name="isCorrect" Type="bit" />
   </EntityType>
   <EntityType Name="Users">
     <Key>

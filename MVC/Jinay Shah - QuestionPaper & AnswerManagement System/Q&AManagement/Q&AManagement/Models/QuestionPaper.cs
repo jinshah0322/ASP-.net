@@ -28,7 +28,6 @@ namespace Q_AManagement.Models
         [Required]
         public string Description { get; set; }
         [Required]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime CreationDate { get; set; }
         public string Status { get; set; }
         public Nullable<int> CreatorID { get; set; }

@@ -38,29 +38,32 @@
                 <div class="options">
                     <div class="option">
                         <label>
-                            @Html.RadioButton($"{question.QuestionID}", $"{ question.OptionA}", new { @class = "radio-button" }) <span>@Html.DisplayFor(modelItem => question.OptionA)</span>
+                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionA}", new { @class = "radio-button", required = "required" })
+                            <span>@Html.DisplayFor(modelItem => question.OptionA)</span>
                         </label>
                     </div>
                     <div class="option">
                         <label>
-                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionB}", new { @class = "radio-button" }) <span>@Html.DisplayFor(modelItem => question.OptionB)</span>
+                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionB}", new { @class = "radio-button", required = "required" })
+                            <span>@Html.DisplayFor(modelItem => question.OptionB)</span>
                         </label>
                     </div>
                     <div class="option">
                         <label>
-                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionC}", new { @class = "radio-button" }) <span>@Html.DisplayFor(modelItem => question.OptionC)</span>
+                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionC}", new { @class = "radio-button", required = "required" })
+                            <span>@Html.DisplayFor(modelItem => question.OptionC)</span>
                         </label>
                     </div>
                     <div class="option">
                         <label>
-                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionD}", new { @class = "radio-button" }) <span>@Html.DisplayFor(modelItem => question.OptionD)</span>
+                            @Html.RadioButton($"{question.QuestionID}", $"{question.OptionD}", new { @class = "radio-button", required = "required" })
+                            <span>@Html.DisplayFor(modelItem => question.OptionD)</span>
                         </label>
                     </div>
                 </div>
             </div>
         }
     </div>
-
 
     <div class="submit-button-container">
         <input type="submit" value="Submit" class="btn btn-primary submit-button mt-2" />

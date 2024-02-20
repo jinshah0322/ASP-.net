@@ -27,6 +27,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Submissions">
+      <EntityTypeMapping TypeName="QandAModel.Submission">
+        <MappingFragment StoreEntitySet="Submission">
+          <ScalarProperty Name="SubmissionID" ColumnName="SubmissionID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="QuestionPaperID" ColumnName="QuestionPaperID" />
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="TickedAnswer" ColumnName="TickedAnswer" />
+          <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+          <ScalarProperty Name="isCorrect" ColumnName="isCorrect" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="QandAModel.User">
         <MappingFragment StoreEntitySet="Users">
@@ -35,18 +48,6 @@
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Role" ColumnName="Role" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Submissions">
-      <EntityTypeMapping TypeName="QandAModel.Submission">
-        <MappingFragment StoreEntitySet="Submission">
-          <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
-          <ScalarProperty Name="TickedAnswer" ColumnName="TickedAnswer" />
-          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
-          <ScalarProperty Name="QuestionPaperID" ColumnName="QuestionPaperID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="SubmissionID" ColumnName="SubmissionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

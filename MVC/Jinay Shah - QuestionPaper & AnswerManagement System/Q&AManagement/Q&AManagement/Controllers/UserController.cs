@@ -61,7 +61,6 @@ namespace Q_AManagement.Controllers
                     return RedirectToAction("Login");
                 }
             return View();
-                
         }
 
         public ActionResult Login()

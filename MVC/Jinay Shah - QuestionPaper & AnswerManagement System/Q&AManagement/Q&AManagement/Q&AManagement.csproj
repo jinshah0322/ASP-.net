@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="Models\QuestionPaperWithSubmission.cs" />
     <Compile Include="Models\QuestionPaperWithCreator.cs" />
+    <Compile Include="Models\AllTableJoin.cs" />
     <Compile Include="Models\Submission.cs">
       <DependentUpon>Users.tt</DependentUpon>
     </Compile>
@@ -257,6 +258,11 @@
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\CreateQuestionPaper.cshtml" />
+    <Content Include="Views\Student\ViewScore.cshtml" />
+    <Content Include="Views\Admin\ViewSubmissions.cshtml" />
+    <Content Include="Views\Admin\ViewScore.cshtml" />
+    <Content Include="Views\Teacher\ViewSubmissions.cshtml" />
+    <Content Include="Views\Teacher\ViewScore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

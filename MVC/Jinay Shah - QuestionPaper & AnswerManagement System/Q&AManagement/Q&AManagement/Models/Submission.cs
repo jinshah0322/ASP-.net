@@ -20,6 +20,7 @@ namespace Q_AManagement.Models
         public Nullable<int> QuestionID { get; set; }
         public string TickedAnswer { get; set; }
         public System.DateTime SubmissionDate { get; set; }
+        public Nullable<bool> isCorrect { get; set; }
     
         public virtual QuestionPaper QuestionPaper { get; set; }
         public virtual Question Question { get; set; }

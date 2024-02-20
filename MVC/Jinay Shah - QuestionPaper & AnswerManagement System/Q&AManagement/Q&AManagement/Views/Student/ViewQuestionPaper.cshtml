@@ -17,12 +17,11 @@
             <h4 class="card-title">@Html.DisplayFor(model => model.Title)</h4>
             <p class="card-text">@Html.DisplayFor(model => model.Description)</p>
             <dl class="row">
-                <dt >Creation Date</dt>
-                <dd >@Html.DisplayFor(model => model.CreationDate)</dd>
+                <dt>Creation Date</dt>
+                <dd>@Html.DisplayFor(model => model.CreationDate)</dd>
             </dl>
             <div>
                 <button type="button" onclick="location.href='@Url.Action("ViewQuestions", new { id = Model.QuestionPaperID})'" class="btn btn-primary">View Questions</button>
-                <button type="button" onclick="location.href='@Url.Action("AnswerQuestionPaper", new { id = Model.QuestionPaperID})'" class="btn btn-success">Attempt</button>
                 <button type="button" onclick="location.href='@Url.Action("Index", "Student")'" class="btn btn-danger ">Home</button>
             </div>
         </div>

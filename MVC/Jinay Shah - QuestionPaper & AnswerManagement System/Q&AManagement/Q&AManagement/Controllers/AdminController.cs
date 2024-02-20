@@ -23,11 +23,13 @@ namespace Q_AManagement.Controllers
         {
             var query = from questionPaper in db.QuestionPapers
                         join user in db.Users on questionPaper.CreatorID equals user.UserID
+                        where questionPaper.Status != "Draft"
                         select new QuestionPaperWithCreator
                         {
                             QuestionPaper = questionPaper,
                             CreatorName = user.Username
                         };
+
             return View(query.ToList());
         }
 
@@ -136,6 +138,14 @@ namespace Q_AManagement.Controllers
                     var questions = db.Questions.Where(model => model.QuestionPaperID == id).ToList();
                     if (questions.Count > 0)
                     {
+                        var submissions = db.Submissions.Where(model => model.QuestionPaperID == id).ToList();
+                        if (submissions.Count > 0)
+                        {
+                            foreach (var submisson in submissions)
+                            {
+                                db.Submissions.Remove(submisson);
+                            }
+                        }
                         foreach (var question in questions)
                         {
                             db.Questions.Remove(question);
@@ -238,6 +248,14 @@ namespace Q_AManagement.Controllers
             if (qid > 0)
             {
                 var questions = db.Questions.Where(model => model.QuestionID == qid).FirstOrDefault();
+                var submissions = db.Submissions.Where(model => model.QuestionID == qid).ToList();
+                if (submissions.Count > 0)
+                {
+                    foreach (var submisson in submissions)
+                    {
+                        db.Submissions.Remove(submisson);
+                    }
+                }
                 db.Entry(questions).State = EntityState.Deleted;
                 db.SaveChanges();
                 TempData["DeleteMessage"] = "Question Deleted Successfully!!";
@@ -273,7 +291,7 @@ namespace Q_AManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserID,Username,Password,Email,Role")] User user)
         {
-            PasswordEncryptionDecryption obj = new PasswordEncryptionDecryption();  
+            PasswordEncryptionDecryption obj = new PasswordEncryptionDecryption();
             if (ModelState.IsValid)
             {
                 user.Password = obj.EncryptString(user.Password);
@@ -331,14 +349,22 @@ namespace Q_AManagement.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
-            if(user!=null)
+            if (user != null)
             {
                 var questionPaper = db.QuestionPapers.Where(model => model.CreatorID == id).FirstOrDefault();
-                if (questionPaper!=null)
+                if (questionPaper != null)
                 {
                     var questions = db.Questions.Where(model => model.QuestionPaperID == questionPaper.QuestionPaperID).ToList();
                     if (questions.Count > 0)
                     {
+                        var submissions = db.Submissions.Where(model => model.QuestionPaperID == id).ToList();
+                        if (submissions.Count > 0)
+                        {
+                            foreach (var submisson in submissions)
+                            {
+                                db.Submissions.Remove(submisson);
+                            }
+                        }
                         foreach (var question in questions)
                         {
                             db.Questions.Remove(question);
@@ -350,6 +376,60 @@ namespace Q_AManagement.Controllers
             db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Users");
+        }
+
+        public ActionResult ViewSubmissions()
+        {
+            var groupedQuery = (from submission in db.Submissions
+                                join questionPaper in db.QuestionPapers on submission.QuestionPaperID equals questionPaper.QuestionPaperID
+                                join user in db.Users on submission.UserID equals user.UserID
+                                select new AllTableJoin
+                                {
+                                    Submissions = submission,
+                                    QuestionPapers = questionPaper,
+                                    Users = user
+                                })
+                    .GroupBy(x => new { x.Submissions.UserID, x.Submissions.QuestionPaperID });
+
+            var query = groupedQuery.Select(g => g.FirstOrDefault());
+
+
+            return View(query);
+        }
+
+        public ActionResult ViewScore(int id,int userID)
+        {
+            var score = db.Submissions.Where(model => model.QuestionPaperID == id && model.isCorrect == true && model.UserID == userID).Count();
+            var query = from submissions in db.Submissions
+                        join questions in db.Questions on submissions.QuestionID equals questions.QuestionID
+                        join questionPaper in db.QuestionPapers on submissions.QuestionPaperID equals questionPaper.QuestionPaperID
+                        join user in db.Users on submissions.UserID equals user.UserID
+                        where submissions.QuestionPaperID == id && submissions.UserID == userID
+                        select new AllTableJoin
+                        {
+                            Questions = questions,
+                            QuestionPapers = questionPaper,
+                            Submissions = submissions,
+                            Users = user,
+                            Score = score
+                        };
+            return View(query.ToList());
+        }
+
+        public ActionResult DeleteSubmission(int questioPaperid, int userid)
+        {
+            if (questioPaperid > 0)
+            {
+                var submissionsToDelete = db.Submissions.Where(model => model.QuestionPaperID == questioPaperid && model.UserID == userid);
+
+                if (submissionsToDelete != null)
+                {
+                    db.Submissions.RemoveRange(submissionsToDelete);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("ViewSubmissions");
+            }
+            return RedirectToAction("ViewSubmissions");
         }
 
         protected override void Dispose(bool disposing)
