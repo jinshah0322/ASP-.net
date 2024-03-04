@@ -1,0 +1,65 @@
+﻿@using Q_AManagement.Helpers
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model IEnumerable<Q_AManagement.Models.QuestionPaperWithCreator>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Question Papers</h2>
+@Html.DisplayTempData("DeleteMessage", "Question Paper Deleted Successfully!!", "red", "left")
+
+<p>
+    <a href="@Url.Action("CreateQuestionPaper")" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Creator Name
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionPaper.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionPaper.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionPaper.CreationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionPaper.Status)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionPaper.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionPaper.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionPaper.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionPaper.Status)
+            </td>
+            <td>
+                    <button type="button" onclick="location.href='@Url.Action("ViewQuestionPaper", new { id = item.QuestionPaper.QuestionPaperID})'" class="btn btn-success">View</button>
+                    <button type="button" onclick="location.href='@Url.Action("EditQuestionPaper", new { id = item.QuestionPaper.QuestionPaperID})'" class="btn btn-primary">Edit</button>
+                    <button type="button" onclick="location.href='@Url.Action("DeleteQuestioPaper", new { id = item.QuestionPaper.QuestionPaperID})'" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,73 @@
+﻿@using Q_AManagement.Helpers
+
+@model Q_AManagement.Models.QuestionPaper
+
+@{
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+
+@{
+    ViewBag.Title = "EditQuestionPaper";
+}
+
+<div class="container marginLeft">
+    <h2 class="mt-4">Edit Question Paper</h2>
+    @Html.DisplayTempData("UpdateMessage", "Question Paper updated Successfully!!", "green", "left")
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="card mt-4">
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.QuestionPaperID)
+
+                <div class="form-group row mb-2">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row mb-2">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row mb-2">
+                    @Html.LabelFor(model => model.CreationDate, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.CreationDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                        @Html.ValidationMessageFor(model => model.CreationDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(model => model.Status, new SelectList(new[]
+                        {
+                            new SelectListItem { Text = "Pending", Value = "Pending" },
+                            new SelectListItem { Text = "Approved", Value = "Approved" }
+                        }, "Value", "Text"), "Select status", new { @class = "form-control", disabled = "disabled" })
+
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <input type="submit" value="Save" class="btn btn-primary mt-2" />
+                        <button type="button" onclick="location.href='@Url.Action("ViewQuestions", new { id = Model.QuestionPaperID})'" class="btn btn-success mt-2">Edit Questions</button>
+                        <a href="@Url.Action("closeQuestion")" class="btn btn-danger mt-2">Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5bac3d95c9c04ff8a46f8b23e2715f80" Name="Diagram1">
+        <EntityTypeShape EntityType="QandAModel.QuestionPaper" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QandAModel.Question" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="QandAModel.Submission" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="QandAModel.User" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="QandAModel.FK_Question_QuestionPaper" ManuallyRouted="false" />
+        <AssociationConnector Association="QandAModel.FK_QuestionPaper_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="QandAModel.FK_Submission_QuestionPaper" ManuallyRouted="false" />
+        <AssociationConnector Association="QandAModel.FK_Submission_Question" ManuallyRouted="false" />
+        <AssociationConnector Association="QandAModel.FK_Submission_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

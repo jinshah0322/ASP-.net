@@ -1,0 +1,68 @@
+1.What is difference between Tag and Element in HTML?
+Tag refers to the individual HTML code, such as <p> or <h1>
+Element consist of opening tag, content inside the tag and closing tag such as <p>Jinay shah</p>
+
+2. Which are void elements in HTML?
+Void element are those which do not have closing tag such has <br>,<img>
+
+3. What is semantic code in HTML?
+Semantic code adds meaning to the structure, helping both browsers and developers understand the content's purpose. Examples include <header>, <footer>
+
+4. What is the difference between pseudo class and pseudo elements in CSS?
+Pseudo Class Selects elements based on their state, like :hover or :first-child.
+Pseudo Element Selects and styles parts of an element, like ::before or ::after.
+
+5. Where in an HTML document is the correct place to refer to an external style sheet?
+Inside <head> section using <link> element
+
+6. Which HTML tag is used to define an internal style sheet?
+<style> tage is used to define an internal style sheet inside <head>
+
+7. Which HTML attribute is used to define inline styles?
+style attribute is used to define inline styles within HTML tags
+
+8. How do you insert a comment in a CSS file?
+/*comment is written here*/
+
+9. Which property is used to change the background color?
+background-color
+
+10. How do you add a background color for all <h1> elements?
+h1 {background-color: red;}
+
+11. Which CSS property controls the text size?
+font-size
+
+12. How do you display hyperlinks without an underline?
+By writing the css property text-decoration:none;
+
+13. How do you make each word in a text start with a capital letter?
+By writing the css property text-transform:capitalize;
+
+14. How do you display a border like this:
+The top border = 10 pixels
+The dotted bottom border  = 5 pixels
+The dashed left border = 20 pixels
+The right border = 1pixel?
+border-top:10px;
+border-bottom:5px dotted;
+border-left:20px dashed;
+border-right:1px;
+
+15. When using the padding property; are you allowed to use negative values?
+No padding doesnot support -ve values
+
+16. How do you group selectors?
+By using ',' such as h1,h2,h3,h4,h5,h6 {color:red;}
+
+17. What is the default value of the position property?
+static
+
+18. How you can define pseudo element?
+By using :: before element name such as ::befre,::after
+
+19. What is box model?
+The box model represents how elements are structured with content, padding, border, and margin
+
+20. What is flex model?
+Flexbox is a layout model in CSS for designing complex layouts more efficiently. It provides an easier way to distribute space and align items

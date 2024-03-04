@@ -1,0 +1,71 @@
+﻿@using TodoListProject.Helpers
+
+@model Tuple<List<TodoListProject.Models.Task>, List<TodoListProject.Models.Task>>
+
+@{
+    ViewBag.Title = "Todo List";
+}
+
+<h3>Pending Tasks</h3>
+
+<p>
+    <a href="@Url.Action("Add")" class="btn btn-primary">Add Task</a>
+</p>
+
+@Html.DisplayTempData("InsertMessage", "Task Added!!", "green")
+
+@Html.DisplayTempData("InsertMessage", "Task with same name already exists!!", "red")
+
+@if (TempData["CompleteMessage"] != null && TempData["CompleteMessage"].ToString() == "Task Completed!!")
+{
+    @Html.DisplayTempData("CompleteMessage", "Task Completed!!", "green")
+}
+
+@Html.DisplayTempData("DeleteMessage", "Task Deleted Successfully!!", "red")
+
+@Html.DisplayTempData("UpdateMessage", "Task updated!!", "green")
+
+
+<table class="table">
+    <tr>
+        <th>Task Name</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Item1)
+    {
+        @Html.Partial("_TaskItem", item)
+    }
+</table>
+
+<h3>Completed Tasks</h3>
+
+@if (TempData["CompleteMessage"] != null && TempData["CompleteMessage"].ToString() == "Task Moved To Pending!!")
+{
+    @Html.DisplayTempData("CompleteMessage", "Task Moved To Pending!!", "red")
+}
+
+<table class="table">
+    <tr>
+        <th>Task Name</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Item2)
+    {
+        @Html.Partial("_TaskItem", item)
+    }
+</table>
+
+@section Scripts {
+    <script>
+        function completeTask(checkbox) {
+            var form = checkbox.closest('form');
+            form.submit();
+        }
+
+        $(document).ready(function () {
+            $('.displayMessage').fadeOut(1750);
+        });
+    </script>
+}

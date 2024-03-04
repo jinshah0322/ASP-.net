@@ -1,0 +1,166 @@
+﻿@using Q_AManagement.Helpers
+
+@model Q_AManagement.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            min-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+
+        .text-danger {
+            color: red;
+        }
+
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+            .custom-dropdown select {
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                appearance: none;
+                background-color: #fff;
+            }
+
+            .custom-dropdown::after {
+                content: '\25BC';
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                pointer-events: none;
+            }
+
+            .custom-dropdown:hover select {
+                border-color: #007bff;
+            }
+
+            .custom-dropdown select:focus {
+                outline: none;
+                border-color: #007bff;
+            }
+
+        @@media screen and (max-width: 500px) {
+            .container {
+                min-width: 300px;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Username)
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email)
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email", autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password)
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password", autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Role)
+                <div class="custom-dropdown">
+                    @Html.DropDownListFor(model => model.Role, new SelectList(new[] { "Student", "Teacher" }), "Select Role", new { @class = "form-control select" })
+                </div>
+                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />    
+            </div>
+        }
+        <div>
+            <span>Already have an account? </span>@Html.ActionLink("Login", "Login")
+        </div>
+    </div>
+</body>
+</html>
