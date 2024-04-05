@@ -13,12 +13,14 @@ using Q_AManagement.Models;
 
 namespace Q_AManagement.Controllers
 {
+    // Controller for managing actions related to admins
     [CustomAuthorize]
     [AdminAuthorizationFilter]
     public class AdminController : Controller
     {
         private QandAEntities db = new QandAEntities();
 
+        // Displays the index page for admins, listing approved question papers with their creators
         public ActionResult Index()
         {
             var query = from questionPaper in db.QuestionPapers
@@ -33,11 +35,13 @@ namespace Q_AManagement.Controllers
             return View(query.ToList());
         }
 
+        // Displays the page for creating a new question paper
         public ActionResult CreateQuestionPaper()
         {
             return View();
         }
 
+        // Handles the creation of a new question paper
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateQuestionPaper(QuestionPaper qp)
@@ -63,11 +67,13 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
+        // Displays the page for adding questions to a question paper
         public ActionResult AddQuestions()
         {
             return View();
         }
 
+        // Handles the addition of questions to a question paper
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddQuestions(Question q)
@@ -109,6 +115,7 @@ namespace Q_AManagement.Controllers
             }
         }
 
+        // Closes a question paper and deletes it if no questions are added
         public ActionResult closeQuestion()
         {
             if (Session["QuestionPaperID"] != null)
@@ -128,6 +135,7 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        // Deletes a question paper along with its associated questions and submissions
         public ActionResult DeleteQuestioPaper(int id)
         {
             if (id > 0)
@@ -159,6 +167,7 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        // Displays details of a specific question paper
         public ActionResult ViewQuestionPaper(int id)
         {
             var query = from questionPaper in db.QuestionPapers
@@ -172,6 +181,7 @@ namespace Q_AManagement.Controllers
             return View(query.FirstOrDefault());
         }
 
+        // Displays questions associated with a specific question paper
         public ActionResult viewQuestions(int id)
         {
             var questions = db.Questions.Where(model => model.QuestionPaperID == id).ToList();
@@ -181,12 +191,14 @@ namespace Q_AManagement.Controllers
             return View(questions);
         }
 
+        // Displays the page for editing a question paper
         public ActionResult EditQuestionPaper(int id)
         {
             var questionpaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
             return View(questionpaper);
         }
 
+        // Handles the editing of a question paper
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditQuestionPaper(QuestionPaper qp)
@@ -201,6 +213,7 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
+        // Displays the page for editing a specific question
         public ActionResult EditQuestions(int qpid, int qid)
         {
             var questions = db.Questions.Where(model => model.QuestionPaperID == qpid && model.QuestionID == qid).FirstOrDefault();
@@ -208,6 +221,7 @@ namespace Q_AManagement.Controllers
             return View(questions);
         }
 
+        // Handles the editing of a specific question
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditQuestions(Question q)
@@ -243,6 +257,7 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
+        // Deletes a question and its associated submissions
         public ActionResult DeleteQuestions(int qpid, int qid)
         {
             if (qid > 0)
@@ -263,11 +278,13 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("viewQuestions", new { id = qpid });
         }
 
+        // Displays a list of users
         public ActionResult Users()
         {
             return View(db.Users.ToList());
         }
 
+        // Displays details of a specific user
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -282,11 +299,13 @@ namespace Q_AManagement.Controllers
             return View(user);
         }
 
+        // Displays the page for creating a new user
         public ActionResult Create()
         {
             return View();
         }
 
+        // Handles the creation of a new user
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserID,Username,Password,Email,Role")] User user)
@@ -303,6 +322,7 @@ namespace Q_AManagement.Controllers
             return View(user);
         }
 
+        // Displays the page for editing a user
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -317,6 +337,7 @@ namespace Q_AManagement.Controllers
             return View(user);
         }
 
+        // Handles the editing of a user
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserID,Username,Password,Email,Role")] User user)
@@ -330,6 +351,7 @@ namespace Q_AManagement.Controllers
             return View(user);
         }
 
+        // Displays the page for deleting a user
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -344,6 +366,7 @@ namespace Q_AManagement.Controllers
             return View(user);
         }
 
+        // Deletes a user and all associated data (question papers, questions, and submissions)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -379,6 +402,7 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("Users");
         }
 
+        // Displays submissions grouped by user and question paper
         public ActionResult ViewSubmissions()
         {
             var groupedQuery = (from submission in db.Submissions
@@ -398,6 +422,7 @@ namespace Q_AManagement.Controllers
             return View(query);
         }
 
+        // Displays the score of a user for a specific question paper
         public ActionResult ViewScore(int id,int userID)
         {
             var score = db.Submissions.Where(model => model.QuestionPaperID == id && model.isCorrect == true && model.UserID == userID).Count();
@@ -417,6 +442,7 @@ namespace Q_AManagement.Controllers
             return View(query.ToList());
         }
 
+        // Deletes submissions associated with a specific question paper and user
         public ActionResult DeleteSubmission(int questioPaperid, int userid)
         {
             if (questioPaperid > 0)
@@ -433,6 +459,7 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("ViewSubmissions");
         }
 
+        // Disposes of the database context when the controller is disposed
         protected override void Dispose(bool disposing)
         {
             if (disposing)

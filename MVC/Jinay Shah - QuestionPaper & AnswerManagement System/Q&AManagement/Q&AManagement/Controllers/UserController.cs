@@ -8,10 +8,13 @@ using Q_AManagement.Helpers;
 
 namespace Q_AManagement.Controllers
 {
+    //This is User Controller
     public class UserController : Controller
     {
         QandAEntities db = new QandAEntities();
         PasswordEncryptionDecryption obj = new PasswordEncryptionDecryption();
+
+        //This function is used to display the register view to the user
         public ActionResult Register()
         {
             if (Session["UserID"] == null)
@@ -38,6 +41,7 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
+        //This function is used when user posts its data into form and click submit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register(User u)
@@ -63,6 +67,7 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
+        //This function is used to display the login view to the user
         public ActionResult Login()
         {
             if (Session["UserID"] == null)
@@ -89,6 +94,7 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
+        //This function is used when user posts its data into login form and click submit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(User u)
@@ -121,6 +127,7 @@ namespace Q_AManagement.Controllers
 
         }
 
+        //This function is called when user clicks on logout button
         public ActionResult Logout()
         {
             Session.Clear();

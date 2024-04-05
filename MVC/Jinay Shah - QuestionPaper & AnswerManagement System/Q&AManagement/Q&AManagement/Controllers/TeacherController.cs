@@ -11,11 +11,14 @@ using System.Web.Mvc;
 
 namespace Q_AManagement.Controllers
 {
+    //This is teacher controller
     [CustomAuthorize]
     [TeacherAuthorizationFilter]
     public class TeacherController : Controller
     {
         QandAEntities db = new QandAEntities();
+
+        //This function is used to display the question paper created by respective teacher
         public ActionResult Index()
         {
             int userID = Convert.ToInt32(Session["UserID"]);
@@ -23,12 +26,13 @@ namespace Q_AManagement.Controllers
             return View(questionPaper);
         }
 
+        //This functions will display the view which is used to create the question paper
         public ActionResult Create()
         {
             return View();
         }
 
-
+        //This function will accept the post request of teacher when they create the question paper by submiting it
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(QuestionPaper qp)
@@ -54,11 +58,13 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
+        //This function is used to display the view to add questions to respective question paper
         public ActionResult AddQuestions()
         {
             return View();
         }
 
+        //This function will accept post request of add questions
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddQuestions(Question q)
@@ -100,7 +106,7 @@ namespace Q_AManagement.Controllers
             }
         }
 
-
+        //After adding the questions when there are no more questions to add teacher clicks on close questions so there this function is called
         public ActionResult closeQuestion()
         {
             if (Session["QuestionPaperID"] != null)
@@ -120,6 +126,7 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        //This functions is called when teacher delets the question paper
         public ActionResult DeleteQuestioPaper(int id)
         {
             if (id > 0)
@@ -151,12 +158,14 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        //This function is used to display all the question paper
         public ActionResult ViewQuestionPaper(int id)
         {
             var QuestionPaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
             return View(QuestionPaper);
         }
 
+        //This function is used to display all the questions
         public ActionResult viewQuestions(int id)
         {
             var questions = db.Questions.Where(model => model.QuestionPaperID == id).ToList();
@@ -166,6 +175,7 @@ namespace Q_AManagement.Controllers
             return View(questions);
         }
 
+        //This function is used to display all the edit question paper view
         public ActionResult EditQuestionPaper(int id)
         {
             var questionpaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
@@ -179,6 +189,7 @@ namespace Q_AManagement.Controllers
             }
         }
 
+        //This function is used when teacher posts question paper data and then edit it in database
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditQuestionPaper(QuestionPaper qp)
@@ -196,6 +207,7 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
+        //This function is used to display all the edit questions view
         public ActionResult EditQuestions(int qpid, int qid)
         {
             var questions = db.Questions.Where(model => model.QuestionPaperID == qpid && model.QuestionID == qid).FirstOrDefault();
@@ -203,6 +215,7 @@ namespace Q_AManagement.Controllers
             return View(questions);
         }
 
+        //This function is used when teacher posts questions data and then edit it in database
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditQuestions(Question q)
@@ -238,6 +251,7 @@ namespace Q_AManagement.Controllers
             return View();
         }
 
+        //This functions is used to delete questions from a question paper
         public ActionResult DeleteQuestions(int qpid, int qid)
         {
             if (qid > 0)
@@ -258,7 +272,7 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("viewQuestions", new { id = qpid });
         }
 
-
+        // Requests approval for a question paper by updating its status to "Pending" in the database.
         public ActionResult RequestApproval(int id)
         {
             var questionpaper = db.QuestionPapers.FirstOrDefault(model => model.QuestionPaperID == id);
@@ -270,6 +284,7 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("ViewQuestionPaper", new { id = id });
         }
 
+        // Retrieves submissions related to question papers created by the current user and displays them.
         public ActionResult ViewSubmissions()
         {
             int userID = Convert.ToInt32(Session["UserID"]);
@@ -291,6 +306,7 @@ namespace Q_AManagement.Controllers
             return View(query);
         }
 
+        // Displays the score of a user for a specific question paper.
         public ActionResult ViewScore(int id,int userID)
         {
             var score = db.Submissions.Where(model => model.QuestionPaperID == id && model.isCorrect == true && model.UserID == userID).Count();

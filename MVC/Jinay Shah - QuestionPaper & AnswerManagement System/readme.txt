@@ -15,17 +15,18 @@ Above Data Source is mentioned which contains DESKTOP-2JN7IG8 so instead of this
 7)Now go to models click on new items and click on data panel which contains ADO.net entity framework model and import the database using db first approach.
 
 8)After model are inserted open users.cs file of model and apply Required validation on Username,password,email and role additionally apply regex on email and password whch are as follows:
-[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage ="Enter Strong Password")]
 [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage ="Invalid Email Address")]
 
 8) Now you are good to go run the project by clicking the run button or by clicking f5
+
+9)When user comes on website they can register them selves as student or teacher
+
+10)Student can attemp exams and view scores of already attempted exam
+
+11)Teacher can create papers, view paper, edit paper, delete paper, create questions, edit questions, view questions, delete questions, request for approval of question paper to admin.
 
 Note that there is a admin user whose credentials are as follows:
 email:admin@gmail.com
 password:Admin@123
 
-you can create student and teacher user by your self.
-
-If you are logging in through u will be redirected to Student Index page and same goes for Admin and Teacher
-
-There are 3 modules Admin,Student and Teacher which are self explainatory from the UI.
+12)Admin user has all the rights as teacher additionally they can approve or reject the question paper, manage users, view and delete the student submissions

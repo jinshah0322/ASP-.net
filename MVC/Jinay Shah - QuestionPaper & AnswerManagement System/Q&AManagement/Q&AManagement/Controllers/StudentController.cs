@@ -8,12 +8,15 @@ using System.Web.Mvc;
 
 namespace Q_AManagement.Controllers
 {
+    // Controller for managing actions related to students
     [CustomAuthorize]
     [StudentAuthorizationFilter]
     public class StudentController : Controller
     {
         // GET: Student
         QandAEntities db = new QandAEntities();
+
+        // Displays approved question papers with submissions for the current user
         public ActionResult Index()
         {
             int userID = Convert.ToInt16(Session["UserID"]);
@@ -37,19 +40,21 @@ namespace Q_AManagement.Controllers
             return View(result);
         }
 
-
+        // Displays details of a specific question paper
         public ActionResult ViewQuestionPaper(int id)
         {
             var QuestionPaper = db.QuestionPapers.Where(model => model.QuestionPaperID == id).FirstOrDefault();
             return View(QuestionPaper);
         }
 
+        // Displays questions associated with a specific question paper
         public ActionResult viewQuestions(int id)
         {
             var questions = db.Questions.Where(model => model.QuestionPaperID == id).ToList();
             return View(questions);
         }
 
+        // Displays questions for answering associated with a specific question paper
         public ActionResult AnswerQuestionPaper(int id)
         {
             ViewBag.QuestionPaperId = id;
@@ -57,6 +62,7 @@ namespace Q_AManagement.Controllers
             return View(questions);
         }
 
+        // Handles submission of answers to a question paper
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AnswerQuestionPaper(int questionPaperId, FormCollection Answer)
@@ -88,6 +94,7 @@ namespace Q_AManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        // Displays the score of a user for a specific question paper
         public ActionResult ViewScore(int id) 
         {
             int userId = Convert.ToInt32(Session["UserID"]);
